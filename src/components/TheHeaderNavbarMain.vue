@@ -90,23 +90,25 @@ export default {
 .link {
   color: white;
   text-decoration: none;
-  font-weight: bold;
+  font-size:large;
+  font-family: 'NanumSquareBold';
 }
 .link-hover {
   color : black;
   text-decoration: none;
-  font-weight: bold;
+  font-size:large;
+  font-family: 'NanumSquareBold';
 }
 .title {
   color : white;
   text-decoration: none;
-  font-weight: 900;
   font-size: x-large;
+  font-family: 'NanumSquareExtraBold';
 }
 .title-hover {
   color : black;
   text-decoration: none;
-  font-weight: 900;
   font-size: x-large;
+  font-family: 'NanumSquareExtraBold';
 }
 </style>
