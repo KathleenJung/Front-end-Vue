@@ -1,9 +1,8 @@
 <template>
   <b-container class="bv-example-row mt-3">
     <b-row>
-      <b-col>
-        <b-alert show><h3>Qna목록</h3></b-alert>
-      </b-col>
+      <h1>QnA를 작성해보세요.</h1>
+        <h3>궁금한 내용을 질문하시면 관리자 확인 후 답변을 받아보실 수 있습니다.</h3>
     </b-row>
     <b-row class="mb-1">
       <b-col class="text-right">
