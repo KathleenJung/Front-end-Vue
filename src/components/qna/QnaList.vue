@@ -15,6 +15,15 @@
         <b-table striped hover :items="articles" :fields="fields" @row-clicked="viewArticle"> </b-table>
       </b-col>
     </b-row>
+    <div>
+  <b-input-group>
+      <b-form-select v-model="selected" :options="options"></b-form-select>
+    <b-form-input v-model="keyword"></b-form-input>
+      <b-button variant="success" @click="search">
+        <b-icon icon="search"></b-icon>
+      </b-button>
+    </b-input-group>
+</div>
   </b-container>
 </template>
 
@@ -32,6 +41,13 @@ export default {
         { key: "userid", label: "작성자", tdClass: "tdClass" },
         { key: "regtime", label: "작성일", tdClass: "tdClass" },
       ],
+      selected: null,
+      options: [
+        {value : 'all', text: '전체'},
+        {value: 'subject', text: '제목'},
+        {value: 'userid', text: '작성자'}
+      ],
+      keyword: "",
     };
   },
   created() {
@@ -48,6 +64,11 @@ export default {
         name: "qnaview",
         params: { articleno: article.articleno },
       });
+    },
+    search() {
+      http.get(`/qna?key=${this.selected}&word=${this.keyword}`).then(({ data }) => {
+        this.articles = data;
+      })
     },
   },
 };
