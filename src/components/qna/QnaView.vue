@@ -71,6 +71,7 @@ export default {
   },
   created() {
     http.get(`/qna/${this.$route.params.articleno}`).then(({ data }) => {
+      console.log(data);
       this.article = data;
     });
   },
