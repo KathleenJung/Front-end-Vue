@@ -55,9 +55,10 @@ export default {
   methods: {
     confirm() {
       alert("로그인!!!");
+      this.movePage();
     },
     movePage() {
-      this.$router.push({ name: "join" });
+      this.$router.push({ name: "main" });
     },
   },
 };
