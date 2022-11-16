@@ -81,12 +81,13 @@ export default {
 .link {
   color : black;
   text-decoration: none;
-  font-weight: bold;
+  font-size:large;
+  font-family: 'NanumSquareBold';
 }
 .title {
   color : black;
   text-decoration: none;
-  font-weight: 900;
   font-size: x-large;
+  font-family: 'NanumSquareExtraBold';
 }
 </style>
