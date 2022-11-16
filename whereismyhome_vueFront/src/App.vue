@@ -1,0 +1,36 @@
+<template>
+  <div id="app" style="">
+    <!-- <the-header-navbar style="position: absolute; width:100%; z-index: 2;"></the-header-navbar> -->
+    <router-view></router-view>
+  </div>
+</template>
+
+<script>
+// import TheHeaderNavbar from "@/components/TheHeaderNavbar";
+
+export default {
+  name: "App",
+  // components: {
+  //   TheHeaderNavbar,
+  // },
+};
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  overflow-y: hidden;
+}
+
+a.router-link-exact-active {
+  color: #89bfef;
+}
+
+a.router-link-exact-active:hover {
+  text-decoration: none;
+}
+</style>
