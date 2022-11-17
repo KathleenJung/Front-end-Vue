@@ -14,7 +14,7 @@
       <b-col>
         <b-table striped hover :items="articles" :fields="fields" @row-clicked="viewArticle">
           <template #cell(subject)="data">
-            <router-link :to="{ name: 'boardview', params: { articleno: data.item.articleno } }">
+            <router-link :to="{ name: 'boardview', params: { articleno: data.item.articleNo } }">
               {{ data.item.subject }}
             </router-link>
           </template>
@@ -33,17 +33,20 @@ export default {
     return {
       articles: [],
       fields: [
-        { key: "articleno", label: "글번호", tdClass: "tdClass" },
+        { key: "articleNo", label: "글번호", tdClass: "tdClass" },
         { key: "subject", label: "제목", tdClass: "tdSubject" },
-        { key: "userid", label: "작성자", tdClass: "tdClass" },
-        { key: "regtime", label: "작성일", tdClass: "tdClass" },
+        { key: "userId", label: "작성자", tdClass: "tdClass" },
+        { key: "registerTime", label: "작성일", tdClass: "tdClass" },
         { key: "hit", label: "조회수", tdClass: "tdClass" },
       ],
     };
   },
   created() {
-    http.get(`/board`).then(({ data }) => {
+    http.get(`/board/list`).then(({ data }) => {
       this.articles = data;
+      data.sort(function(a, b)  {
+        return -(a.articleNo - b.articleNo);
+      });
     });
   },
   methods: {
@@ -53,7 +56,7 @@ export default {
     viewArticle(article) {
       this.$router.push({
         name: "boardview",
-        params: { articleno: article.articleno },
+        params: { articleno: article.articleNo },
       });
     },
   },

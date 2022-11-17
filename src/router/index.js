@@ -99,7 +99,7 @@ const routes = [
         component: () => import("@/components/board/BoardView"),
       },
       {
-        path: "modify",
+        path: "modify/:articleno",
         name: "boardmodify",
         component: () => import("@/components/board/BoardModify"),
       },
