@@ -2,7 +2,7 @@
   <div>
     <the-header-navbar-main style="position: absolute; width:100%; z-index: 1;"></the-header-navbar-main>
   <div style="z-index: 2;">
-    <b-img :src="require('@/assets/main.jpg')" align="left"></b-img>
+    <b-img :src="require('@/assets/main.jpg')" align="left" width=""></b-img>
   <b-container class="bv-example-row text-center">
     <h3 class="underline-steelblue"><b-icon icon="house"></b-icon> SSAFY</h3>
     
