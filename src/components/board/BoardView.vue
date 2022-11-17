@@ -17,8 +17,8 @@
     <b-row class="mb-1">
       <b-col>
         <b-card
-          :header-html="`<h3>${article.articleno}.
-          ${article.subject} [${article.hit}]</h3><div><h6>${article.userid}</div><div>${article.regtime}</h6></div>`"
+          :header-html="`<h3>${article.articleNo}.
+          ${article.subject} [${article.hit}]</h3><div><h6>${article.userId}</div><div>${article.registerTime}</h6></div>`"
           class="mb-2"
           border-variant="dark"
           no-body
@@ -50,7 +50,8 @@ export default {
     },
   },
   created() {
-    http.get(`/board/${this.$route.params.articleno}`).then(({ data }) => {
+    http.get(`/board/view/${this.$route.params.articleno}`).then(({ data }) => {
+      // console.log(data);
       this.article = data;
     });
   },
@@ -58,7 +59,7 @@ export default {
     moveModifyArticle() {
       this.$router.replace({
         name: "boardmodify",
-        params: { articleno: this.article.articleno },
+        params: { articleno: this.article.articleNo },
       });
       //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
@@ -66,12 +67,13 @@ export default {
       if (confirm("정말로 삭제?")) {
         this.$router.replace({
           name: "boarddelete",
-          params: { articleno: this.article.articleno },
+          params: { articleno: this.article.articleNo },
         });
       }
     },
     moveList() {
-      this.$router.push({ name: "boardlist" });
+      // this.$router.push({ name: "boardlist" });
+      
     },
   },
   // filters: {
