@@ -3,7 +3,7 @@
     <b-navbar toggleable="lg" type="dark" :variant="isHovered ? 'white' : 'TRANSPARENT'">
       <b-navbar-brand href="#">
         <router-link :to="{ name: 'main' }" :class="isHovered ? 'm-5 title-hover' : 'm-5 title'">
-          WhereIsMyHome?
+          WhereIsOurHome?
           <!-- <b-img
             :src="require('@/assets/ssafy_logo.png')"
             id="logo"
@@ -47,16 +47,17 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-            <template #button-content>
-              <b-icon icon="people" font-scale="2"></b-icon>
-            </template>
-              <router-link :to="{ name: 'join' }" :class="isHovered ? 'mr-5 link-hover' : 'mr-5 link'">
-                <!-- <b-icon icon="person-circle"></b-icon> -->
-                SIGN-UP
-              </router-link>
-              <router-link :to="{ name: 'login' }" :class="isHovered ? 'mr-5 link-hover' : 'mr-5 link'"> 
-                <!-- <b-icon icon="key"></b-icon> -->
-                SIGN-IN </router-link>
+          <template #button-content>
+            <b-icon icon="people" font-scale="2"></b-icon>
+          </template>
+          <router-link :to="{ name: 'join' }" :class="isHovered ? 'mr-5 link-hover' : 'mr-5 link'">
+            <!-- <b-icon icon="person-circle"></b-icon> -->
+            SIGN-UP
+          </router-link>
+          <router-link :to="{ name: 'login' }" :class="isHovered ? 'mr-5 link-hover' : 'mr-5 link'">
+            <!-- <b-icon icon="key"></b-icon> -->
+            SIGN-IN
+          </router-link>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -71,7 +72,7 @@ export default {
   name: "TheHeaderNavbar",
   data() {
     return {
-      isHovered:false,
+      isHovered: false,
     };
   },
   methods: {
@@ -90,23 +91,26 @@ export default {
 .link {
   color: white;
   text-decoration: none;
-  font-size:large;
+  font-size: large;
   font-family: 'NanumSquareBold';
 }
+
 .link-hover {
-  color : black;
+  color: black;
   text-decoration: none;
-  font-size:large;
+  font-size: large;
   font-family: 'NanumSquareBold';
 }
+
 .title {
-  color : white;
+  color: white;
   text-decoration: none;
   font-size: x-large;
   font-family: 'NanumSquareExtraBold';
 }
+
 .title-hover {
-  color : black;
+  color: black;
   text-decoration: none;
   font-size: x-large;
   font-family: 'NanumSquareExtraBold';
