@@ -1,65 +1,34 @@
 <template>
     <b-container class="mt-5 mb-5">
         <div>
-            <div class="titles">부동산 뉴스</div>
+            <div class="titles" data-aos="fade-down">부동산 뉴스</div>
             <b-card-group deck>
-                <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1006975425" target="_blank" class="newslink"
-                    data-aos="fade-right">
-                    <b-card title="뉴스 제목" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-                        tag="article" class="mb-3 text-left news">
-                        <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1006975425"></a>
-                        <b-card-sub-title class="mb-2">카테고리</b-card-sub-title>
+                <a :href="news[0].url" target="_blank" class="newslink" data-aos="fade-right">
+                    <b-card img-src="https://placekitten.com/1000/300" img-alt="Image" img-top tag="article"
+                        img-height="200" class="mb-3 text-left news">
+                        <b-card-title>{{ news[0].title }}</b-card-title>
+                        <b-card-sub-title class="mb-2">{{ news[0].categoryName }}</b-card-sub-title>
                     </b-card>
                 </a>
-                <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1006972580" target="_blank" class="newslink"
-                    data-aos="fade-right">
-                    <b-card title="뉴스 제목" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-                        tag="article" class="mb-3 text-left news">
-                        <b-card-sub-title class="mb-2">카테고리</b-card-sub-title>
+                <a :href="news[1].url" target="_blank" class="newslink" data-aos="fade-right">
+                    <b-card img-src="https://placekitten.com/380/200" img-alt="Image" img-top tag="article"
+                        img-height="200" style="height:50px" class="mb-3 text-left news">
+                        <b-card-title>{{ news[1].title }}</b-card-title>
+                        <b-card-sub-title class="mb-2">{{ news[1].categoryName }}</b-card-sub-title>
                     </b-card>
                 </a>
-                <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1006972580" target="_blank" class="newslink"
-                    data-aos="fade-right">
-                    <b-card title="뉴스 제목" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-                        tag="article" class="mb-3 text-left news">
-                        <b-card-sub-title class="mb-2">카테고리</b-card-sub-title>
+                <a :href="news[2].url" target="_blank" class="newslink" data-aos="fade-left">
+                    <b-card img-src="https://placekitten.com/500/350" img-alt="Image" img-top tag="article"
+                        img-height="200" class="mb-3 text-left news">
+                        <b-card-title>{{ news[2].title }}</b-card-title>
+                        <b-card-sub-title class="mb-2">{{ news[2].categoryName }}</b-card-sub-title>
                     </b-card>
                 </a>
-                <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1006972580" target="_blank" class="newslink"
-                    data-aos="fade-right">
-                    <b-card title="뉴스 제목" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-                        tag="article" class="mb-3 text-left news">
-                        <b-card-sub-title class="mb-2">카테고리</b-card-sub-title>
-                    </b-card>
-                </a>
-            </b-card-group>
-            <b-card-group deck>
-                <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1006975425" target="_blank" class="newslink"
-                    data-aos="fade-left">
-                    <b-card title="뉴스 제목" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-                        tag="article" class="mb-3 text-left news">
-                        <b-card-sub-title class="mb-2">카테고리</b-card-sub-title>
-                    </b-card>
-                </a>
-                <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1006975425" target="_blank" class="newslink"
-                    data-aos="fade-left">
-                    <b-card title="뉴스 제목" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-                        tag="article" class="mb-3 text-left news">
-                        <b-card-sub-title class="mb-2">카테고리</b-card-sub-title>
-                    </b-card>
-                </a>
-                <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1006975425" target="_blank" class="newslink"
-                    data-aos="fade-left">
-                    <b-card title="뉴스 제목" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-                        tag="article" class="mb-3 text-left news">
-                        <b-card-sub-title class="mb-2">카테고리</b-card-sub-title>
-                    </b-card>
-                </a>
-                <a href="https://news.sbs.co.kr/news/endPage.do?news_id=N1006975425" target="_blank" class="newslink"
-                    data-aos="fade-left">
-                    <b-card title="뉴스 제목" img-src="https://picsum.photos/600/300/?image=25" img-alt="Image" img-top
-                        tag="article" class="mb-3 text-left news">
-                        <b-card-sub-title class="mb-2">카테고리</b-card-sub-title>
+                <a :href="news[2].url" target="_blank" class="newslink" data-aos="fade-left">
+                    <b-card img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top tag="article"
+                        img-height="200" class="mb-3 text-left news">
+                        <b-card-title>{{ news[3].title }}</b-card-title>
+                        <b-card-sub-title class="mb-2">{{ news[3].categoryName }}</b-card-sub-title>
                     </b-card>
                 </a>
             </b-card-group>
@@ -69,11 +38,22 @@
 </template>
 
 <script>
+import http from "@/api/http";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 AOS.init();
 export default {
-
+    name: "newsView",
+    data() {
+        return {
+            news: [],
+        };
+    },
+    created() {
+        http.get(`/news`).then(({ data }) => {
+            this.news = data;
+        });
+    },
 }
 </script>
 
@@ -92,7 +72,8 @@ export default {
 }
 
 .newslink {
-    max-width: 25%;
+    max-width: 50%;
     text-decoration: none;
+    color: inherit;
 }
 </style>
