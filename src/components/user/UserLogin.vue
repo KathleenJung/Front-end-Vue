@@ -43,21 +43,34 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
+const memberStore = "memberStore";
+
 export default {
   name: "UserLogin",
   data() {
     return {
-      isLoginError: false,
       user: {
         userid: null,
         userpwd: null,
       },
     };
   },
+    computed: {
+    ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
+  },
   methods: {
-    confirm() {
-      alert("로그인!!!");
-      this.movePage();
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      await this.userConfirm(this.user);
+      let token = sessionStorage.getItem("accessToken");
+      console.log(token);
+      console.log(this.isLogin);
+      if (this.isLogin) {
+        await this.getUserInfo(token);
+        this.$router.push({ name: "main" });
+      }
     },
     movePage() {
       this.$router.push({ name: "main" });
