@@ -1,13 +1,14 @@
 <template>
   <div>
-    <the-header-navbar-main style="position: absolute; width: 100%; z-index: 1"></the-header-navbar-main>
+    <the-header-navbar-main style="position: absolute; width: 100%; z-index: 1">
+    </the-header-navbar-main>
     <div style="z-index: 2">
       <b-img :src="require('@/assets/main.jpg')" align="left" fluid-grow alt="Fluid-grow image"></b-img>
       <b-container class="maincontents">
         <div class="title">부동산의 모든 것</div>
         <div class="title">'구해줘 홈즈'에서 쉽고 간편하게</div>
         <a class="btnScroll" href="#content">
-          <b-icon icon="caret-down-fill" class="mt-5" font-scale="3" color="#f5f5f5"></b-icon>
+          <b-icon icon="caret-down-fill" class="mt-5" font-scale="3" color="#b8b9e3"></b-icon>
         </a>
       </b-container>
 
@@ -47,9 +48,11 @@
     </div>
     <div>&nbsp;</div>
     <div id="content" class="content" style="background-color: #fafafa; padding: 200px;">
-      <div>이렇게 많은 집 중에 우리가 살 집 어떻게 구하지?</div>
-      <div>지역 별 아파트 정보를 한 눈에 조회하고 비교하세요.</div>
-      <div>신혼부부를 위한 편리한 부동산 서비스, 구해줘 홈즈입니다.</div>
+      <div data-aos="fade-down">
+        <div>이렇게 많은 집 중에 우리가 살 집 어떻게 구하지?</div>
+        <div>지역 별 아파트 정보를 한 눈에 조회하고 비교하세요.</div>
+        <div>신혼부부를 위한 편리한 부동산 서비스, 구해줘 홈즈입니다.</div>
+      </div>
     </div>
     <news-view></news-view>
   </div>
@@ -58,6 +61,9 @@
 <script>
 import TheHeaderNavbarMain from "@/components/TheHeaderNavbarMain";
 import NewsView from "@/components/news/NewsView.vue"
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+AOS.init();
 export default {
   name: "AppMain",
   components: {
@@ -71,10 +77,6 @@ export default {
 </script>
 
 <style scoped>
-html {
-  scroll-behavior: smooth;
-}
-
 .underline-steelblue {
   display: inline-block;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0) 70%, rgba(72, 190, 233, 0.3) 30%);
