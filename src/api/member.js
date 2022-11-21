@@ -22,4 +22,12 @@ async function logout(userid, success, fail) {
   await api.get(`/user/logout/${userid}`).then(success).catch(fail);
 }
 
-export { login, findById, tokenRegeneration, logout };
+async function findPwd(userid, success, fail){
+  await api.get(`/user/${userid}/password`).then(success).catch(fail);
+}
+
+async function changePwd(userid, success, fail){
+  await api.put(`/user/${userid}/password`).then(success).catch(fail);
+}
+
+export { login, findById, tokenRegeneration, logout, findPwd, changePwd};

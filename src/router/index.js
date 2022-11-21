@@ -75,6 +75,11 @@ const routes = [
         name: "login",
         component: () => import("@/components/user/UserLogin"),
       },
+      {
+        path : "findPwd",
+        name : "findPwd",
+        component: () => import("@/components/user/UserFindPwd"),
+      },
     ],
   },
   {
