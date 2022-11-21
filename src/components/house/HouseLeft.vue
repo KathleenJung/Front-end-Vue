@@ -1,7 +1,7 @@
 <template>
   <div style="max-width: 80%">
     <div class="m-5">
-      <b>동으로 검색</b>
+      <div id="title">동으로 검색</div>
       <b-form-group id="input-sido">
         <b-form-select
           id="input-sido"
@@ -29,7 +29,7 @@
       <b-button variant="outline-primary">검색</b-button>
     </div>
     <div class="m-5">
-      <b>아파트로 검색</b>
+      <div id="title">아파트 이름으로 검색</div>
       <b-form-group id="input-group-2">
         <b-form-input
           id="input-2"
@@ -63,4 +63,10 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+#title {
+  font-family: "NanumSquareBold";
+  font-size: larger;
+  margin-top: 20px;
+}
+</style>

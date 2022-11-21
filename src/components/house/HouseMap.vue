@@ -1,7 +1,9 @@
 <template>
   <div>
     <!-- <div style="padding-top:200px;"></div> -->
-    <b-button style="position: absolute; left: 0; z-index: 3" @click="openLeft"> ▶</b-button>
+    <b-button class="m-5" style="position: absolute; left: 0; z-index: 3" @click="openLeft">
+      ▶</b-button
+    >
     <house-left
       :style="
         !leftClick
@@ -17,7 +19,9 @@
       "
     >
     </house-right>
-    <b-button style="position: absolute; right: 0; z-index: 3" @click="openRight"> ▶</b-button>
+    <b-button class="m-5" style="position: absolute; right: 0; z-index: 3" @click="openRight">
+      ▶</b-button
+    >
     <!-- <house-left style="display: none; z-index: 2"></house-left> -->
     <div id="map" style="position: absolute; z-index: 1"></div>
   </div>
