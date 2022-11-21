@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout} from "@/api/member";
+import { login, findById, tokenRegeneration, logout, changePwd} from "@/api/member";
 
 const memberStore = {
   namespaced: true,
@@ -136,6 +136,23 @@ const memberStore = {
         }
       );
     },
+    async changePassword(userid){
+      console.log('change password 메소드', userid);
+      await changePwd(
+        userid,
+        ({data}) => {
+          if(data.message == "success"){
+            alert('비밀번호 변경 완료. 다시 로그인 해주세요.');
+            this.userLogout(userid);
+          } else {
+            console.log("비밀번호 갱신 실패");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    }
   },
 };
 

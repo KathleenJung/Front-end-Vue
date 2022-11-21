@@ -23,8 +23,11 @@ async function logout(userid, success, fail) {
 }
 
 async function findPwd(userid, success, fail){
-  console.log('확인', userid);
   await api.get(`/user/${userid}/password`).then(success).catch(fail);
 }
 
-export { login, findById, tokenRegeneration, logout, findPwd};
+async function changePwd(userid, success, fail){
+  await api.put(`/user/${userid}/password`).then(success).catch(fail);
+}
+
+export { login, findById, tokenRegeneration, logout, findPwd, changePwd};
