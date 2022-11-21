@@ -17,7 +17,7 @@
             <b-form-input type="password" id="userpwd" v-model="user.userpwd" required placeholder="비밀번호"
               autoComplete="on" @keyup.enter="confirm"></b-form-input>
           </b-form-group>
-          <div class="text-left" style="color:#9042f5;">비밀번호를 잊으셨나요?</div>
+          <div class="text-left" style="color:#9042f5;" @click="moveFindPwd">비밀번호를 잊으셨나요?</div>
           <!-- <b-button type="button" variant="info" class="mt-3 p-2"
             style="width: 100%; font-size: larger; border-radius: 24px;" @click="confirm">Sign in
           </b-button> -->
@@ -51,7 +51,17 @@ export default {
   },
   methods: {
     ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    log(){
+        console.log(this.user.userid);
+        console.log(this.user.userpwd);
+    },
     async confirm() {
+      this.log();
+      if(this.user.userid == null || this.user.userpwd == null){
+        alert("ID 혹은 Password를 입력해주세요");
+        return;
+      }
+      
       await this.userConfirm(this.user);
       let token = sessionStorage.getItem("accessToken");
       console.log(token);
@@ -67,6 +77,9 @@ export default {
     moveJoin() {
       this.$router.push({ name: "join" });
     },
+    moveFindPwd(){
+      this.$router.push({name : "findPwd"})
+    }, 
   },
 };
 </script>

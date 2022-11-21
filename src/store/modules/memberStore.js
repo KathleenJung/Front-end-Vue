@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout  } from "@/api/member";
+import { login, findById, tokenRegeneration, logout} from "@/api/member";
 
 const memberStore = {
   namespaced: true,
@@ -34,7 +34,7 @@ const memberStore = {
     },
   },
   actions: {
-    async userConfirm({ commit }, user) { 
+    async userConfirm({ commit }, user) {
       await login(
         user,
         ({ data }) => { 
