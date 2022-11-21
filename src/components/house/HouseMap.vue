@@ -2,9 +2,10 @@
   <div>
     <!-- <div style="padding-top:200px;"></div> -->
     <b-button class="m-5" style="position: absolute; left: 0; z-index: 3" @click="openLeft">
-      ▶</b-button
+      ◀</b-button
     >
     <house-left
+      @focusDong="focusingDong"
       :style="
         !leftClick
           ? 'display:none;'
@@ -12,6 +13,7 @@
       "
     ></house-left>
     <house-right
+      v-if="loadViewRendering"
       :style="
         !rightClick
           ? 'display:none;'
@@ -28,6 +30,7 @@
 </template>
 
 <script>
+import http from "@/api/http";
 import HouseLeft from "@/components/house/HouseLeft.vue";
 import HouseRight from "@/components/house/HouseRight.vue";
 export default {
@@ -41,12 +44,17 @@ export default {
       map: null,
       leftClick: false,
       rightClick: false,
+      loadViewRendering: false,
+      focusDong: { name: "", code: null },
+      apt: [],
+      // focusDongName: "",
+      // focusDongCode: null,
     };
   },
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAOMAP_KEY}`;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${process.env.VUE_APP_KAKAOMAP_KEY}&libraries=services`;
       /* global kakao */
       script.addEventListener("load", () => {
         kakao.maps.load(this.initMap);
@@ -74,11 +82,60 @@ export default {
       // 지도의 우측에 확대 축소 컨트롤을 추가한다
       this.map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
     },
+
+    // 사이드 컴포넌트 열기/닫기
     openLeft() {
       this.leftClick = !this.leftClick;
     },
     openRight() {
+      this.loadViewRendering = true;
       this.rightClick = !this.rightClick;
+    },
+
+    // 검색한 곳에서 데이터 받아오기
+    focusingDong(dong) {
+      this.focusDong.name = dong.dongAdd;
+      this.focusDong.code = dong.dongCode;
+      this.focusDongCreate();
+    },
+
+    focusDongCreate() {
+      // 장소 검색 객체를 생성합니다
+      var ps = new kakao.maps.services.Places();
+
+      const vueInstance = this;
+
+      // 키워드로 장소를 검색합니다
+      ps.keywordSearch(this.focusDong.name, placesSearchCB);
+
+      // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+      function placesSearchCB(data, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+          // LatLngBounds 객체에 좌표를 추가합니다
+          var bounds = new kakao.maps.LatLngBounds();
+
+          for (var i = 0; i < data.length; i++) {
+            // displayMarker(data[i]);
+            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+
+          // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+          vueInstance.map.setBounds(bounds);
+        }
+      }
+      this.aptInfo();
+    },
+
+    aptInfo() {
+      http.get(`/houses/tempList?dongCode=${this.focusDong.code}`).then(({ data }) => {
+        this.apt = data;
+        console.log(data);
+      });
+      // console.log(this.apt);
+
+      // TODO : 마커 넣기
+      // https://apis.map.kakao.com/web/sample/removableCustomOverlay/
     },
   },
 };

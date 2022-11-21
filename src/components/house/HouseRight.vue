@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 80%; padding: 20px">
+  <div style="width: 500px; max-width: 80%; padding: 20px">
     <!-- <b-img :src="require('@/assets/happyhouse.png')" style="width: 400px"></b-img> -->
     <div id="roadview" style="height: 300px"></div>
     <div id="aptName">햇빛아파트</div>

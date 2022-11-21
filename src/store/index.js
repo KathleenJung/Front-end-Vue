@@ -11,6 +11,7 @@ export default new Vuex.Store({
   state: {
     sidos: [{ value: null, text: "선택하세요" }],
     guguns: [{ value: null, text: "선택하세요" }],
+    dongs: [{value:null, text:"선택하세요"}],
     houses: [],
     house: null,
     todos: [
@@ -43,6 +44,11 @@ export default new Vuex.Store({
     SET_GUGUN_LIST(state, guguns) {
       guguns.forEach((gugun) => {
         state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+      });
+    },
+    SET_DONG_LIST(state, dongs) {
+      dongs.forEach((dong) => {
+        state.dongs.push({ value: dong.dongCode, text: dong.dongName });
       });
     },
     CLEAR_SIDO_LIST(state) {
