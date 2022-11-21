@@ -1,5 +1,5 @@
 <template>
-  <div id="app" style="">
+  <div id="app">
     <!-- <the-header-navbar style="position: absolute; width:100%; z-index: 2;"></the-header-navbar> -->
     <router-view></router-view>
   </div>
@@ -19,7 +19,6 @@ export default {
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
