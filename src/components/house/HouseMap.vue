@@ -2,34 +2,21 @@
   <div>
     <!-- <div style="padding-top:200px;"></div> -->
     <b-button class="m-5" style="position: absolute; left: 0; z-index: 3" @click="openLeft">
-      ◀</b-button
-    >
-    <house-left
-      @focusDong="focusingDong"
-      :style="
-        !leftClick
-          ? 'display:none;'
-          : 'position:absolute; left:0; margin:25px; background-color:white; height:650px; z-index:2'
-      "
-    ></house-left>
-    <house-right
-      v-if="loadViewRendering"
-      :aptInfomation="aptInfomation"
-      :style="
-        !rightClick
-          ? 'display:none;'
-          : 'position:absolute; right:0; margin:25px; background-color:white; height:650px; z-index:2'
-      "
-    >
+      ◀</b-button>
+    <house-left @focusDong="focusingDong" :style="
+      !leftClick
+        ? 'display:none;'
+        : 'position:absolute; left:0; margin:25px; background-color:white; height:650px; z-index:2'
+    "></house-left>
+    <house-right v-if="loadViewRendering" :aptInfomation="aptInfomation" :style="
+      !rightClick
+        ? 'display:none;'
+        : 'position:absolute; right:0; margin:25px; background-color:white; height:650px; z-index:2; overflow-y:auto;'
+    ">
     </house-right>
-    <b-button
-      v-if="aptInfomation != null"
-      class="m-5"
-      style="position: absolute; right: 0; z-index: 3"
-      @click="openRight"
-    >
-      ▶</b-button
-    >
+    <b-button v-if="aptInfomation != null" class="m-5" style="position: absolute; right: 0; z-index: 3"
+      @click="openRight">
+      ▶</b-button>
     <!-- <house-left style="display: none; z-index: 2"></house-left> -->
     <div id="map" style="position: absolute; z-index: 1"></div>
   </div>

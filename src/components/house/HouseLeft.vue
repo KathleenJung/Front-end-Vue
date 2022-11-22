@@ -3,46 +3,27 @@
     <div class="m-5">
       <div id="title">동으로 검색</div>
       <b-form-group id="input-sido">
-        <b-form-select
-          ref="test"
-          id="input-sido"
-          v-model="form.sido"
-          :options="sido"
-          @change="setGugun"
-          required
-        >
+        <b-form-select ref="test" id="input-sido" v-model="form.sido" :options="sido" @change="setGugun" required>
         </b-form-select>
       </b-form-group>
       <b-form-group id="input-gugun">
-        <b-form-select
-          id="input-gugun"
-          v-model="form.gugun"
-          :options="gugun"
-          @change="setDong"
-          required
-        ></b-form-select>
+        <b-form-select id="input-gugun" v-model="form.gugun" :options="gugun" @change="setDong" required>
+        </b-form-select>
       </b-form-group>
       <b-form-group id="input-dong">
-        <b-form-select
-          id="input-dong"
-          v-model="form.dong"
-          :options="dong"
-          @change="getDongName"
-          required
-        ></b-form-select>
+        <b-form-select id="input-dong" v-model="form.dong" :options="dong" @change="getDongName" required>
+        </b-form-select>
       </b-form-group>
       <b-button variant="outline-primary" @click.prevent="focusDong">검색</b-button>
     </div>
     <div class="m-5">
       <div id="title">아파트 이름으로 검색</div>
       <b-form-group id="input-group-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.name"
-          placeholder="아파트명"
-          required
-        ></b-form-input>
+        <b-form-input id="input-2" v-model="form.name" placeholder="아파트명" required></b-form-input>
       </b-form-group>
+      <div>
+        <!-- <Slider v-model="value" /> -->
+      </div>
       <b-button variant="outline-primary">검색</b-button>
     </div>
   </div>
@@ -50,6 +31,7 @@
 
 <script>
 import http from "@/api/http";
+// import Slider from '@vueform/slider'
 
 export default {
   name: "HouseLeft",
@@ -65,11 +47,19 @@ export default {
       sido: [],
       gugun: [],
       dong: [],
+      // value: [20, 40],
     };
   },
+  // components: { Slider },
   methods: {
     setGugun() {
       this.getSidoName();
+
+      this.selected.gugun = "";
+      this.selected.dong = "";
+
+      this.form.gugun = "";
+      this.form.dong = "";
 
       this.gugun = [];
       this.dong = [];
@@ -81,6 +71,9 @@ export default {
     },
     setDong() {
       this.getGugunName();
+
+      this.selected.dong = "";
+      this.form.dong = "";
 
       this.dong = [];
       http.get(`/map/dong?sido=${this.form.sido}&gugun=${this.form.gugun}`).then(({ data }) => {
