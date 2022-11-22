@@ -5,7 +5,7 @@
       <b-card-group deck>
         <a :href="news[0].url" target="_blank" class="newslink" data-aos="fade-right">
           <b-card
-            img-src="https://placekitten.com/1000/300"
+            :img-src= "this.news[0].imgURL"
             img-alt="Image"
             img-top
             tag="article"
@@ -14,11 +14,12 @@
           >
             <b-card-title>{{ news[0].title }}</b-card-title>
             <b-card-sub-title class="mb-2">{{ news[0].categoryName }}</b-card-sub-title>
+            <b-card-text>{{news[0].date}}</b-card-text>
           </b-card>
         </a>
         <a :href="news[1].url" target="_blank" class="newslink" data-aos="fade-right">
           <b-card
-            img-src="https://placekitten.com/380/200"
+            :img-src= "this.news[1].imgURL"
             img-alt="Image"
             img-top
             tag="article"
@@ -28,11 +29,12 @@
           >
             <b-card-title>{{ news[1].title }}</b-card-title>
             <b-card-sub-title class="mb-2">{{ news[1].categoryName }}</b-card-sub-title>
+            <b-card-text>{{news[1].date}}</b-card-text>
           </b-card>
         </a>
         <a :href="news[2].url" target="_blank" class="newslink" data-aos="fade-left">
           <b-card
-            img-src="https://placekitten.com/500/350"
+            :img-src= "this.news[2].imgURL"
             img-alt="Image"
             img-top
             tag="article"
@@ -41,11 +43,12 @@
           >
             <b-card-title>{{ news[2].title }}</b-card-title>
             <b-card-sub-title class="mb-2">{{ news[2].categoryName }}</b-card-sub-title>
+            <b-card-text>{{news[2].date}}</b-card-text>
           </b-card>
         </a>
         <a :href="news[2].url" target="_blank" class="newslink" data-aos="fade-left">
           <b-card
-            img-src="https://placekitten.com/g/300/450"
+            :img-src= "this.news[3].imgURL"
             img-alt="Image"
             img-top
             tag="article"
@@ -55,6 +58,7 @@
           >
             <b-card-title>{{ news[3].title }}</b-card-title>
             <b-card-sub-title class="mb-2">{{ news[3].categoryName }}</b-card-sub-title>
+            <b-card-text>{{news[3].date}}</b-card-text>
           </b-card>
         </a>
       </b-card-group>
@@ -77,6 +81,7 @@ export default {
   created() {
     http.get(`/news`).then(({ data }) => {
       this.news = data;
+      console.log(this.news);
     });
   },
 };
