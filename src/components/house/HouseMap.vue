@@ -14,6 +14,7 @@
     ></house-left>
     <house-right
       v-if="loadViewRendering"
+      :aptInfomation="aptInfomation"
       :style="
         !rightClick
           ? 'display:none;'
@@ -21,7 +22,12 @@
       "
     >
     </house-right>
-    <b-button class="m-5" style="position: absolute; right: 0; z-index: 3" @click="openRight">
+    <b-button
+      v-if="aptInfomation != null"
+      class="m-5"
+      style="position: absolute; right: 0; z-index: 3"
+      @click="openRight"
+    >
       ▶</b-button
     >
     <!-- <house-left style="display: none; z-index: 2"></house-left> -->
@@ -42,11 +48,13 @@ export default {
   data() {
     return {
       map: null,
-      leftClick: false,
+      leftClick: true,
       rightClick: false,
       loadViewRendering: false,
       focusDong: { name: "", code: null },
+      markers: [],
       apt: [],
+      aptInfomation: null,
       // focusDongName: "",
       // focusDongCode: null,
     };
@@ -68,7 +76,7 @@ export default {
     initMap() {
       const container = document.getElementById("map");
       const options = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(37.5666805, 126.9784147),
         level: 5,
       };
 
@@ -87,13 +95,22 @@ export default {
     openLeft() {
       this.leftClick = !this.leftClick;
     },
+    // 버튼 클릭 시 오른쪽 컴포넌트 열기
     openRight() {
       this.loadViewRendering = true;
       this.rightClick = !this.rightClick;
     },
+    // 마커 클릭 시 오른쪽 컴포넌트 열기
+    openRightCom() {
+      if (this.loadViewRendering == false) {
+        this.loadViewRendering = true;
+      }
+      this.rightClick = true;
+    },
 
     // 검색한 곳에서 데이터 받아오기
     focusingDong(dong) {
+      this.rightClick = false;
       this.focusDong.name = dong.dongAdd;
       this.focusDong.code = dong.dongCode;
       this.focusDongCreate();
@@ -127,15 +144,57 @@ export default {
       this.aptInfo();
     },
 
-    aptInfo() {
-      http.get(`/houses/tempList?dongCode=${this.focusDong.code}`).then(({ data }) => {
+    async aptInfo() {
+      await http.get(`/houses/tempList?dongCode=${this.focusDong.code}`).then(({ data }) => {
         this.apt = data;
         console.log(data);
       });
-      // console.log(this.apt);
 
       // TODO : 마커 넣기
       // https://apis.map.kakao.com/web/sample/removableCustomOverlay/
+
+      this.deleteMarkers();
+      this.markers = [];
+      for (let i = 0; i < this.apt.length; i++) {
+        // 마커가 표시될 위치입니다
+        let markerPosition = new kakao.maps.LatLng(this.apt[i].lat, this.apt[i].lng);
+
+        // 마커를 생성합니다
+        let marker = new kakao.maps.Marker({
+          // map: this.map,
+          position: markerPosition,
+        });
+        this.markers.push(marker);
+
+        const vueInstance = this;
+        kakao.maps.event.addListener(marker, "click", function () {
+          vueInstance.openRightCom();
+          vueInstance.aptInfomation = vueInstance.apt[i];
+          console.log(vueInstance.aptInfomation);
+          vueInstance.map.setCenter(markerPosition);
+        });
+      }
+      // this.setMarkers();
+      this.showMarkers();
+    },
+    // 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+    setMarkers() {
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(this.map);
+      }
+    },
+
+    // "마커 보이기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에 표시하는 함수입니다
+    showMarkers() {
+      this.setMarkers(this.map);
+    },
+
+    // "마커 감추기" 버튼을 클릭하면 호출되어 배열에 추가된 마커를 지도에서 삭제하는 함수입니다
+    deleteMarkers() {
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
+      // this.setMap(null);
     },
   },
 };
