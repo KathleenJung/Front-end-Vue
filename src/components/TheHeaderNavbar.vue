@@ -22,25 +22,21 @@
               <b-icon icon="house-door" animation="fade" font-scale="2"></b-icon>
               메인
             </router-link> -->
-            <router-link :to="{ name: 'insta' }" class="m-5 link">
-              <!-- <b-icon icon="instagram" font-scale="2"></b-icon> -->
-              INSTAGRAM
-            </router-link>
-            <router-link :to="{ name: 'board' }" class="m-5 link">
-              <!-- <b-icon icon="journal" animation="fade" font-scale="2"></b-icon> -->
-              BOARD
-            </router-link>
             <router-link :to="{ name: 'house' }" class="m-5 link">
               <!-- <b-icon icon="house-fill" animation="fade" font-scale="2"></b-icon> -->
               HOUSE
             </router-link>
-            <router-link :to="{ name: 'todo' }" class="m-5 link">
-              <!-- <b-icon icon="calendar-check" animation="fade" font-scale="2"></b-icon> -->
-              TODOLIST
+            <router-link :to="{ name: 'board' }" class="m-5 link">
+              <!-- <b-icon icon="journal" animation="fade" font-scale="2"></b-icon> -->
+              NOTICE
             </router-link>
             <router-link :to="{ name: 'qna' }" class="m-5 link">
               <!-- <b-icon icon="patch-question" animation="fade" font-scale="2"></b-icon> -->
               QNA
+            </router-link>
+            <router-link :to="{ name: 'todo' }" class="m-5 link">
+              <!-- <b-icon icon="calendar-check" animation="fade" font-scale="2"></b-icon> -->
+              TODOLIST
             </router-link>
           </b-nav-item>
         </b-navbar-nav>
