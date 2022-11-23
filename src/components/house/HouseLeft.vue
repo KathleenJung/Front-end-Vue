@@ -3,15 +3,34 @@
     <div class="m-5">
       <div id="title">동으로 검색</div>
       <b-form-group id="input-sido">
-        <b-form-select ref="test" id="input-sido" v-model="form.sido" :options="sido" @change="setGugun" required>
+        <b-form-select
+          ref="test"
+          id="input-sido"
+          v-model="form.sido"
+          :options="sido"
+          @change="setGugun"
+          required
+        >
         </b-form-select>
       </b-form-group>
       <b-form-group id="input-gugun">
-        <b-form-select id="input-gugun" v-model="form.gugun" :options="gugun" @change="setDong" required>
+        <b-form-select
+          id="input-gugun"
+          v-model="form.gugun"
+          :options="gugun"
+          @change="setDong"
+          required
+        >
         </b-form-select>
       </b-form-group>
       <b-form-group id="input-dong">
-        <b-form-select id="input-dong" v-model="form.dong" :options="dong" @change="getDongName" required>
+        <b-form-select
+          id="input-dong"
+          v-model="form.dong"
+          :options="dong"
+          @change="getDongName"
+          required
+        >
         </b-form-select>
       </b-form-group>
       <b-button variant="outline-primary" @click.prevent="focusDong">검색</b-button>
@@ -19,11 +38,31 @@
     <div class="m-5">
       <div id="title">아파트 이름으로 검색</div>
       <b-form-group id="input-group-2">
-        <b-form-input id="input-2" v-model="form.name" placeholder="아파트명" required></b-form-input>
+        <b-form-input
+          id="input-2"
+          v-model="form.name"
+          placeholder="아파트명"
+          required
+        ></b-form-input>
       </b-form-group>
-      <div>
-        <!-- <Slider v-model="value" /> -->
+      <div id="title">가격으로 검색</div>
+      <div id="slider">
+        <Slider v-model="budget" :min="5" :max="100" :format="formatB" />
       </div>
+      <div v-if="subBudget[1] < 10 && subBudget[3] < 10">
+        {{ subBudget[0] }}천만원~{{ subBudget[2] }}천만원
+      </div>
+      <div v-if="subBudget[1] < 10 && subBudget[3] >= 10">
+        {{ subBudget[0] }}천만원~{{ subBudget[2] }}억원
+      </div>
+      <div v-if="subBudget[1] >= 10 && subBudget[3] >= 10">
+        {{ subBudget[0] }}억원~{{ subBudget[2] }}억원
+      </div>
+      <div id="title">면적으로 검색</div>
+      <div id="slider">
+        <Slider v-model="area" :min="0" :max="231" :format="formatA" :step="Math.floor(33)" />
+      </div>
+      <div>{{ area[0] }}m²~{{ area[1] }}m²</div>
       <b-button variant="outline-primary">검색</b-button>
     </div>
   </div>
@@ -31,7 +70,7 @@
 
 <script>
 import http from "@/api/http";
-// import Slider from '@vueform/slider'
+import Slider from "@vueform/slider/dist/slider.vue2.js";
 
 export default {
   name: "HouseLeft",
@@ -47,10 +86,41 @@ export default {
       sido: [],
       gugun: [],
       dong: [],
-      // value: [20, 40],
+
+      // slider
+      budget: [5, 100],
+      area: [Math.floor(99), Math.floor(231)],
+      formatB: {
+        prefix: "￦",
+        suffix: "만원",
+        thousand: ",",
+      },
+      formatA: {
+        suffix: "m²",
+      },
     };
   },
-  // components: { Slider },
+  computed: {
+    subBudget() {
+      let b = [];
+      if (this.budget[0] < 10) {
+        b.push(this.budget[0]);
+        b.push(this.budget[0]);
+      } else if (this.budget[0] >= 10) {
+        b.push(this.budget[0] / 10);
+        b.push(this.budget[0]);
+      }
+      if (this.budget[1] < 10) {
+        b.push(this.budget[1]);
+        b.push(this.budget[1]);
+      } else if (this.budget[1] >= 10) {
+        b.push(this.budget[1] / 10);
+        b.push(this.budget[1]);
+      }
+      return b;
+    },
+  },
+  components: { Slider },
   methods: {
     setGugun() {
       this.getSidoName();
@@ -108,8 +178,18 @@ export default {
 
     // HouseMap에게 주소로 검색 요청
     focusDong() {
+      let code;
+      if (this.form.dong == null) {
+        if (this.form.gugun == null) {
+          code = this.form.sido;
+        } else {
+          code = this.form.gugun;
+        }
+      } else {
+        code = this.form.dong;
+      }
       const dong = {
-        dongCode: this.form.dong,
+        dongCode: code,
         dongAdd: `${this.selected.sido} ${this.selected.gugun} ${this.selected.dong}`,
       };
       // const dongCode = this.form.dong;
@@ -136,4 +216,9 @@ export default {
   font-size: larger;
   margin-top: 20px;
 }
+#slider {
+  margin-top: 50px;
+  margin-bottom: 15px;
+}
 </style>
+<style src="@vueform/slider/themes/default.css"></style>
