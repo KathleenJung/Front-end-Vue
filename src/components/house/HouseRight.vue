@@ -6,39 +6,47 @@
     <div id="buildYear" style="text-align: left">건축년도 : {{ aptInfomation.buildYear }}</div>
     <div id="address">{{ aptInfomation.roadNameAddress }}</div>
     <div id="address">{{ aptInfomation.jibunNameAddress }}</div>
-    <div @click="viewDetail">자세히보기</div>
-    <house-info style="position: absolute; width:100%;" v-if="viewInfo"></house-info>
+    <div @click="viewInfo">자세히보기</div>
     <div id="title">매매 정보</div>
     <div>
-      <div id="text" style="margin-bottom:10px;" v-if="areas.length == 0">매매 정보가 없습니다 (┬┬﹏┬┬)</div>
+      <div id="text" style="margin-bottom: 10px" v-if="areas.length == 0">
+        매매 정보가 없습니다 (┬┬﹏┬┬)
+      </div>
       <b-tabs content-class="mt-3" pills fill>
-        <b-tab v-for="(area, index) in areas" :key="index" :title="String(area)" @click="disableMore">
+        <b-tab
+          v-for="(area, index) in areas"
+          :key="index"
+          :title="String(area)"
+          @click="disableMore"
+        >
           <!-- <div id="charts" style="margin-top: 10px; margin-bottom: 10px">
             <LineChartGenerator :chart-options="chartOptions" :chart-data="dates" :chart-id="chartId"
               :dataset-id-key="datasetIdKey" :plugins="plugins" :css-classes="cssClasses" :styles="styles"
               :width="width" :height="height" />
           </div> -->
           <div v-if="!more">
-            <b-table id="infoTable" hover :items="dealListByArea[index].slice(0, 5)" :fields="fields">
+            <b-table
+              id="infoTable"
+              hover
+              :items="dealListByArea[index].slice(0, 5)"
+              :fields="fields"
+            >
             </b-table>
           </div>
           <div v-if="more">
             <b-table id="infoTable" hover :items="dealListByArea[index]" :fields="fields"></b-table>
           </div>
-          <div id="text" @click="moreInfo" v-if="!more && dealListByArea[index].length > 5">더보기</div>
+          <div id="text" @click="moreInfo" v-if="!more && dealListByArea[index].length > 5">
+            더보기
+          </div>
           <div id="text" @click="moreInfo" v-if="more">접기</div>
         </b-tab>
       </b-tabs>
     </div>
-
-
-
-
   </div>
 </template>
 
 <script>
-import HouseInfo from './HouseInfo.vue';
 // charts.js
 // import { Line as LineChartGenerator } from "vue-chartjs/legacy";
 
@@ -56,7 +64,6 @@ import HouseInfo from './HouseInfo.vue';
 // ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, CategoryScale, PointElement);
 
 export default {
-  components: { HouseInfo },
   data() {
     return {
       roadview: "",
@@ -79,7 +86,6 @@ export default {
           sortable: true,
         },
       ],
-      viewInfo: false,
 
       // charts
       // chartData: {
@@ -99,14 +105,17 @@ export default {
     };
   },
   methods: {
+    viewInfo() {
+      let routeUrl = this.$router.resolve({
+        path: "/house/info",
+      });
+      window.open(routeUrl.href, "_blank");
+    },
     moreInfo() {
       this.more = !this.more;
     },
     disableMore() {
       this.more = false;
-    },
-    viewDetail() {
-      this.viewInfo = true;
     },
   },
   computed: {

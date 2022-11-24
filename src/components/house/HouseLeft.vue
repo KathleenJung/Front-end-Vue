@@ -3,12 +3,26 @@
     <div class="m-5">
       <div id="title">동으로 검색</div>
       <b-form-group id="input-sido">
-        <b-form-select ref="test" id="input-sido" v-model="form.sido" :options="sido" @change="setGugun" required>
+        <b-form-select
+          ref="test"
+          id="input-sido"
+          v-model="form.sido"
+          :options="sido"
+          @change="setGugun"
+          required
+        >
         </b-form-select>
       </b-form-group>
       <b-form-group id="input-gugun">
         <b-form-select disabled v-if="!isSido"></b-form-select>
-        <b-form-select id=" input-gugun" v-model="form.gugun" :options="gugun" @change="setDong" required v-if="isSido">
+        <b-form-select
+          id=" input-gugun"
+          v-model="form.gugun"
+          :options="gugun"
+          @change="setDong"
+          v-if="isSido"
+          required
+        >
         </b-form-select>
       </b-form-group>
       <b-form-invalid-feedback :state="blockOnlySido">
@@ -16,15 +30,23 @@
       </b-form-invalid-feedback>
       <b-form-select disabled v-if="!isGugun"></b-form-select>
       <b-form-group id="input-dong">
-        <b-form-select id="input-dong" v-model="form.dong" :options="dong" @change="getDongName" required
-          v-if="isGugun">
+        <b-form-select
+          id="input-dong"
+          v-model="form.dong"
+          :options="dong"
+          @change="getDongName"
+          v-if="isGugun"
+          required
+        >
         </b-form-select>
       </b-form-group>
-      <b-button class="m-2" variant="outline-danger" @click.prevent="clearAll">초기화</b-button>
+      <b-button type="reset" class="m-2" variant="outline-danger" @click.prevent="clearAll"
+        >초기화</b-button
+      >
       <b-button class="m-2" variant="outline-primary" @click.prevent="focusDong">검색</b-button>
     </div>
     <div class="m-5">
-      <div id="title" style="color:blue; font-family: 'NanumSquareExtraBold';">상세 검색</div>
+      <div id="title" style="color: blue; font-family: 'NanumSquareExtraBold'">상세 검색</div>
       <div id="title">아파트 이름으로 검색</div>
       <b-form-group id="input-group-2">
         <b-form-input id="input-2" v-model="aptName" placeholder="아파트명" required></b-form-input>
@@ -59,9 +81,9 @@
 
 <script>
 import http from "@/api/http";
-// import Slider from "@vueform/slider/dist/slider.vue2.js";
-import VueSlider from 'vue-slider-component'
-import 'vue-slider-component/theme/default.css'
+import VueSlider from "vue-slider-component";
+import "vue-slider-component/theme/default.css";
+import { mapActions } from "vuex";
 
 export default {
   name: "HouseLeft",
@@ -126,10 +148,11 @@ export default {
       if (this.form.gugun == "") {
         return false;
       } else return true;
-    }
+    },
   },
   components: { VueSlider },
   methods: {
+    ...mapActions(["setSidoStore", "setGugunStore", "setDongStore", "setSearchDongStore"]),
     setGugun() {
       this.getSidoName();
 
@@ -225,11 +248,30 @@ export default {
       }
       // const dongCode = this.form.dong;
       // const dongAdd = `${this.selected.sido} ${this.selected.gugun} ${this.selected.dong}`;
-      // console.log(dongAdd + ` ${this.form.dong}`);
       console.log(`${dong.dongAdd} ${dong.dongCode} 를 검색합니다.`);
       // console.log(`${dong.budgetLow} ${dong.budgetHigh} ${dong.areaLow} ${dong.areaHigh} ${dong.aptName}`);
-      // console.log(`${this.form.dong}`);
+
+      // store에 설정
+      const sido = { value: this.form.sido, text: this.selected.sido };
+      this.setSidoStore(sido);
+      const gugun = { value: this.form.gugun, text: this.selected.gugun };
+      this.setGugunStore(gugun);
+      const dong1 = { value: this.form.dong, text: this.selected.dong };
+      this.setDongStore(dong1);
+      this.setSearchDongStore(dong);
+
       this.$emit("focusDong", dong);
+    },
+    clearAll() {
+      this.form.sido = "";
+      this.form.gugun = "";
+      this.form.dong = "";
+      this.aptName = "";
+      this.budget = [5, 100];
+      this.area = [0, 231];
+      this.selected.sido = "";
+      this.selected.gugun = "";
+      this.selected.dong = "";
     },
   },
   created() {
@@ -238,14 +280,6 @@ export default {
         this.sido.push({ text: data[i].sidoName, value: data[i].sidoCode });
       }
     });
-  },
-  clearAll() {
-    this.form.sido = "";
-    this.form.gugun = "";
-    this.form.dong = "";
-    this.aptName = "";
-    this.budget = [5, 100];
-    this.area = [0, 231];
   },
 };
 </script>

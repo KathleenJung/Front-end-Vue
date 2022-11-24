@@ -73,8 +73,7 @@ const memberStore = "memberStore";
 export default {
   name: "TheHeaderNavbar",
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
@@ -84,13 +83,15 @@ export default {
     ...mapActions(memberStore, ["userLogout"]),
     onClickLogout() {
       console.log(this.userInfo.userId);
-      // this.userLogout(this.userInfo.userId);
-      this.$memberStore.dispatch("userLogout", this.userInfo.userId);
+      //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
+      //+ satate에 isLogin, userInfo 정보 변경)
+      // this.$store.dispatch("userLogout", this.userInfo.userid);
+      this.userLogout(this.userInfo.userId);
       sessionStorage.removeItem("accessToken"); //저장된 토큰 없애기
       sessionStorage.removeItem("refreshToken"); //저장된 토큰 없애기
       if (this.$route.path != "/") this.$router.push({ name: "main" });
     },
-  }
+  },
 };
 </script>
 
@@ -103,13 +104,13 @@ export default {
   color: black;
   text-decoration: none;
   font-size: large;
-  font-family: 'NanumSquareBold';
+  font-family: "NanumSquareBold";
 }
 
 .title {
   color: black;
   text-decoration: none;
   font-size: x-large;
-  font-family: 'NanumSquareExtraBold';
+  font-family: "NanumSquareExtraBold";
 }
 </style>

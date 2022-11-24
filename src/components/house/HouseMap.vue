@@ -1,41 +1,79 @@
 <template>
   <div>
     <!-- <div style="padding-top:200px;"></div> -->
-    <b-button class="m-5" variant="light" style="position: absolute; left: 0; z-index: 3" @click="openLeft">
+    <b-button
+      class="m-5"
+      variant="light"
+      style="position: absolute; left: 0; z-index: 3"
+      @click="openLeft"
+    >
       <b-icon icon="search"></b-icon>
     </b-button>
-    <house-left @focusDong="focusingDong" :style="
-      !leftClick
-        ? 'display:none;'
-        : 'position:absolute; left:0; margin:1.5%; background-color:white; height:85%; z-index:2; overflow-y:auto;'
-    "></house-left>
-    <house-statistics :style="
-      !staClick
-        ? 'display:none;'
-        : 'position:absolute; margin:1.5%; right:0; background-color:white; height:27%; z-index:2; overflow-y:auto;'
-    "></house-statistics>
-    <house-right v-if="loadViewRendering" :aptInfomation="aptInfomation" :style="
-      !rightClick
-        ? 'display:none;'
-        : 'position:absolute; bottom:0; right:0; margin:1.5%; background-color:white; height:60%; z-index:2; overflow-y:auto;'
-    ">
+    <house-left
+      @focusDong="focusingDong"
+      :style="
+        !leftClick
+          ? 'display:none;'
+          : 'position:absolute; left:0; margin:1.5%; background-color:white; height:85%; z-index:2; overflow-y:auto;'
+      "
+    ></house-left>
+    <house-statistics
+      :style="
+        !staClick
+          ? 'display:none;'
+          : 'position:absolute; margin:1.5%; right:0; background-color:white; height:27%; z-index:2; overflow-y:auto;'
+      "
+    ></house-statistics>
+    <house-right
+      v-if="loadViewRendering"
+      :aptInfomation="aptInfomation"
+      :style="
+        !rightClick
+          ? 'display:none;'
+          : 'position:absolute; bottom:0; right:0; margin:1.5%; background-color:white; height:60%; z-index:2; overflow-y:auto;'
+      "
+    >
     </house-right>
-    <b-button id="title" variant="light" class="m-2" style="position: absolute; right: 0; z-index: 5" @click="infoView"
-      v-if="view">
-      x</b-button>
-    <house-info style="position: absolute; width:100%; height:90%; background-color: aqua; z-index:4" v-if="view">
-    </house-info>
-    <b-button id="title" variant="light" class="m-5" style="position: absolute; bottom: 0; z-index: 3" @click="closeAll"
-      v-if="this.rightClick || this.leftClick || this.staClick">
-      Close All</b-button>
-    <b-button v-if="aptInfomation != null" variant="light" class="m-5" style="position: absolute; right: 0; z-index: 3"
-      @click="openSta">
+    <b-button
+      id="title"
+      variant="light"
+      class="m-2"
+      style="position: absolute; right: 0; z-index: 5"
+      @click="infoView"
+      v-if="view"
+    >
+      x</b-button
+    >
+    <b-button
+      id="title"
+      variant="light"
+      class="m-5"
+      style="position: absolute; bottom: 0; z-index: 3"
+      @click="closeAll"
+      v-if="this.rightClick || this.leftClick || this.staClick"
+    >
+      Close All</b-button
+    >
+    <b-button
+      v-if="aptInfomation != null"
+      variant="light"
+      class="m-5"
+      style="position: absolute; right: 0; z-index: 3"
+      @click="openSta"
+    >
       <b-icon icon="bar-chart-line-fill"></b-icon>
     </b-button>
-    <b-button v-if="aptInfomation != null" variant="light" class="m-5"
-      style="position: absolute; bottom: 0; right: 0; z-index: 3" @click="openRight">
-      <b-icon icon="info-circle-fill
-"></b-icon>
+    <b-button
+      v-if="aptInfomation != null"
+      variant="light"
+      class="m-5"
+      style="position: absolute; bottom: 0; right: 0; z-index: 3"
+      @click="openRight"
+    >
+      <b-icon
+        icon="info-circle-fill
+"
+      ></b-icon>
     </b-button>
     <div id="map" style="position: absolute; z-index: 1"></div>
   </div>
@@ -46,14 +84,13 @@ import http from "@/api/http";
 import HouseLeft from "@/components/house/HouseLeft.vue";
 import HouseRight from "@/components/house/HouseRight.vue";
 import HouseStatistics from "@/components/house/HouseStatistics.vue";
-import HouseInfo from "@/components/house/HouseInfo.vue";
+
 export default {
   name: "KakaoMap",
   components: {
     HouseLeft,
     HouseRight,
     HouseStatistics,
-    HouseInfo,
   },
   data() {
     return {
@@ -63,7 +100,13 @@ export default {
       staClick: false,
       loadViewRendering: false,
       focusDong: {
-        name: "", code: null, budgetLow: null, budgetHigh: null, areaLow: null, areaHigh: null, aptName: null
+        name: "",
+        code: null,
+        budgetLow: null,
+        budgetHigh: null,
+        areaLow: null,
+        areaHigh: null,
+        aptName: null,
       },
       markers: [],
       apt: [],
@@ -76,10 +119,9 @@ export default {
       markerImage: "",
 
       aptInfomation: null,
-
-      view: true,
     };
   },
+  computed: {},
   mounted() {
     if (!window.kakao || !window.kakao.maps) {
       const script = document.createElement("script");
@@ -159,9 +201,6 @@ export default {
       this.leftClick = false;
       this.staClick = false;
       this.rightClick = false;
-    },
-    infoView() {
-      this.view = false;
     },
 
     zoomMarkers() {
@@ -274,10 +313,14 @@ export default {
     },
 
     async aptInfo() {
-      await http.get(`/houses?dongCode=${this.focusDong.code}&apartmentName=${this.focusDong.aptName}&budgetLow=${this.focusDong.budgetLow}&budgetHigh=${this.focusDong.budgetHigh}&areaLow=${this.focusDong.areaLow}&areaHigh=${this.focusDong.areaHigh}`).then(({ data }) => {
-        this.apt = data;
-        console.log(this.apt);
-      });
+      await http
+        .get(
+          `/houses?dongCode=${this.focusDong.code}&apartmentName=${this.focusDong.aptName}&budgetLow=${this.focusDong.budgetLow}&budgetHigh=${this.focusDong.budgetHigh}&areaLow=${this.focusDong.areaLow}&areaHigh=${this.focusDong.areaHigh}`
+        )
+        .then(({ data }) => {
+          this.apt = data;
+          console.log(this.apt);
+        });
 
       this.clusterer.clear();
       this.markers = [];
