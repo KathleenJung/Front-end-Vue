@@ -26,7 +26,8 @@ export default new Vuex.Store({
       budgetHigh: null,
       areaLow: null,
       areaHigh:null,
-    }
+    },
+    sequrityIndex: Object,
   },
   getters: {
     allTodosCount(state) {
@@ -56,6 +57,9 @@ export default new Vuex.Store({
     },
     SET_SEARCH_DONG(state, searchDong) {
       state.searchDong = searchDong;
+    },
+    SET_SEQURITY_INDEX(state, sequrityIndex) {
+      state.sequrityIndex = sequrityIndex;
     },
     CLEAR_SEARCH_DONG(state) {
       state.searchDong = {
@@ -129,10 +133,13 @@ export default new Vuex.Store({
     setHouseListStore({ commit }, houses) {
       commit("SET_HOUSE_LIST", houses);
     },
-    detailHouse({ commit }, house) {
+    setDetailHouseStore({ commit }, house) {
       // 나중에 house.일련번호를 이용하여 API 호출
       // console.log(commit, house);
       commit("SET_DETAIL_HOUSE", house);
+    },
+    setSecurityStore({ commit }, securityIndex) {
+      commit("SET_SEQURITY_INDEX", securityIndex);
     },
     getHouseList({ commit }, gugunCode) {
       // vue cli enviroment variables 검색

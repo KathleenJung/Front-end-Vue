@@ -7,7 +7,7 @@
     </b-row>
     <b-row class="mb-1">
       <b-col class="text-right">
-        <b-button variant="outline-primary" @click="moveWrite()">글쓰기</b-button>
+        <b-button variant="outline-primary" @click="moveWrite()" v-if="isAdmin()">글쓰기</b-button>
       </b-col>
     </b-row>
     <b-row>
@@ -26,6 +26,9 @@
 
 <script>
 import http from "@/api/http";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
   name: "BoardList",
@@ -41,15 +44,24 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
+  },
   created() {
     http.get(`/board/list`).then(({ data }) => {
       this.articles = data;
-      data.sort(function(a, b)  {
+      data.sort(function (a, b) {
         return -(a.articleNo - b.articleNo);
       });
     });
   },
   methods: {
+    isAdmin() {
+      if (this.userInfo.roles.includes("ADMIN")) {
+        return true;
+      }
+      return false;
+    },
     moveWrite() {
       this.$router.push({ name: "boardwrite" });
     },

@@ -10,8 +10,17 @@
         <b-button variant="outline-primary" @click="moveList">목록</b-button>
       </b-col>
       <b-col class="text-right">
-        <b-button variant="outline-info" size="sm" @click="moveModifyArticle" class="mr-2">글수정</b-button>
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle">글삭제</b-button>
+        <b-button
+          variant="outline-info"
+          size="sm"
+          @click="moveModifyArticle"
+          class="mr-2"
+          v-if="isAdmin()"
+          >글수정</b-button
+        >
+        <b-button variant="outline-danger" size="sm" @click="deleteArticle" v-if="isAdmin()"
+          >글삭제</b-button
+        >
       </b-col>
     </b-row>
     <b-row class="mb-1">
@@ -35,6 +44,9 @@
 <script>
 // import moment from "moment";
 import http from "@/api/http";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
   name: "BoardDetail",
@@ -44,6 +56,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(memberStore, ["userInfo"]),
     message() {
       if (this.article.content) return this.article.content.split("\n").join("<br>");
       return "";
@@ -56,6 +69,12 @@ export default {
     });
   },
   methods: {
+    isAdmin() {
+      if (this.userInfo.roles.includes("ADMIN")) {
+        return true;
+      }
+      return false;
+    },
     moveModifyArticle() {
       this.$router.replace({
         name: "boardmodify",
@@ -73,7 +92,6 @@ export default {
     },
     moveList() {
       // this.$router.push({ name: "boardlist" });
-      
     },
   },
   // filters: {

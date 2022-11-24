@@ -10,8 +10,17 @@
         <b-button variant="outline-primary" @click="moveList">목록</b-button>
       </b-col>
       <b-col class="text-right">
-        <b-button variant="outline-info" size="sm" @click="moveModifyArticle" class="mr-2">글수정</b-button>
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle">글삭제</b-button>
+        <b-button
+          variant="outline-info"
+          size="sm"
+          @click="moveModifyArticle"
+          class="mr-2"
+          v-if="isMyQnA()"
+          >글수정</b-button
+        >
+        <b-button variant="outline-danger" size="sm" v-if="isMyQnA()" @click="deleteArticle"
+          >글삭제</b-button
+        >
       </b-col>
     </b-row>
     <b-row class="mb-1">
@@ -30,31 +39,32 @@
       </b-col>
     </b-row>
     <b-row v-if="article.qnaAnswerDto" class="mb-1">
-        <b-col>
-            <b-card :header-html="
-            `<div>${article.qnaAnswerDto.userId}</div>`
-            "
-            class="mb-2"
-            border-variant="dark"
-            no-body
-            >
-                <b-card-body class="text-left">
-                    <div v-html="`<div>${article.qnaAnswerDto.answerContent}</div>`"></div>
-                </b-card-body>
-            </b-card>
-        </b-col>
+      <b-col>
+        <b-card
+          :header-html="`<div>${article.qnaAnswerDto.userId}</div>`"
+          class="mb-2"
+          border-variant="dark"
+          no-body
+        >
+          <b-card-body class="text-left">
+            <div v-html="`<div>${article.qnaAnswerDto.answerContent}</div>`"></div>
+          </b-card-body>
+        </b-card>
+      </b-col>
     </b-row>
     <b-row v-else class="mb-1">
-        <b-col>
-            <div>답변 대기 중 입니다.</div>
-        </b-col>
+      <b-col>
+        <div>답변 대기 중 입니다.</div>
+      </b-col>
     </b-row>
   </b-container>
 </template>
 
 <script>
-// import moment from "moment";
 import http from "@/api/http";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
   name: "QnaDetail",
@@ -64,6 +74,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(memberStore, ["userInfo"]),
     message() {
       if (this.article.content) return this.article.content.split("\n").join("<br>");
       return "";
@@ -76,6 +87,11 @@ export default {
     });
   },
   methods: {
+    isMyQnA() {
+      if (this.userInfo.userId === this.article.userid) {
+        return true;
+      } else false;
+    },
     moveModifyArticle() {
       this.$router.replace({
         name: "qnamodify",
