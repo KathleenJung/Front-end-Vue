@@ -2,9 +2,8 @@
   <div>
     <!-- <div style="padding-top:200px;"></div> -->
     <b-button
-      class="m-5"
       variant="light"
-      style="position: absolute; left: 0; z-index: 3"
+      style="position: absolute; left: 0; z-index: 3; margin-top: 4%; margin-left: 3%"
       @click="openLeft"
     >
       <b-icon icon="search"></b-icon>
@@ -14,43 +13,25 @@
       :style="
         !leftClick
           ? 'display:none;'
-          : 'position:absolute; left:0; margin:1.5%; background-color:white; height:85%; z-index:2; overflow-y:auto;'
+          : 'position:absolute; left:0; margin-top:3%; margin-bottom:3%; margin-left:2%; background-color:white; height:80%; z-index:2; overflow-y:auto;'
       "
     ></house-left>
-    <house-statistics
-      :style="
-        !staClick
-          ? 'display:none;'
-          : 'position:absolute; margin:1.5%; right:0; background-color:white; height:27%; z-index:2; overflow-y:auto;'
-      "
-    ></house-statistics>
     <house-right
       v-if="loadViewRendering"
       :aptInfomation="aptInfomation"
       :style="
         !rightClick
           ? 'display:none;'
-          : 'position:absolute; bottom:0; right:0; margin:1.5%; background-color:white; height:60%; z-index:2; overflow-y:auto;'
+          : 'position:absolute; padding:20px; width:500px; right:0; margin-top:3%; margin-bottom:3%; margin-right:2%; background-color:white; height:80%; z-index:2; overflow-y:auto;'
       "
     >
     </house-right>
     <b-button
       id="title"
       variant="light"
-      class="m-2"
-      style="position: absolute; right: 0; z-index: 5"
-      @click="infoView"
-      v-if="view"
-    >
-      x</b-button
-    >
-    <b-button
-      id="title"
-      variant="light"
-      class="m-5"
       style="position: absolute; bottom: 0; z-index: 3"
       @click="closeAll"
-      v-if="this.rightClick || this.leftClick || this.staClick"
+      v-if="this.rightClick || this.leftClick"
     >
       Close All</b-button
     >
@@ -58,16 +39,7 @@
       v-if="aptInfomation != null"
       variant="light"
       class="m-5"
-      style="position: absolute; right: 0; z-index: 3"
-      @click="openSta"
-    >
-      <b-icon icon="bar-chart-line-fill"></b-icon>
-    </b-button>
-    <b-button
-      v-if="aptInfomation != null"
-      variant="light"
-      class="m-5"
-      style="position: absolute; bottom: 0; right: 0; z-index: 3"
+      style="position: absolute; right: 0; z-index: 3; margin-top: 4%; margin-right: 3%"
       @click="openRight"
     >
       <b-icon
@@ -83,21 +55,19 @@
 import http from "@/api/http";
 import HouseLeft from "@/components/house/HouseLeft.vue";
 import HouseRight from "@/components/house/HouseRight.vue";
-import HouseStatistics from "@/components/house/HouseStatistics.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "KakaoMap",
   components: {
     HouseLeft,
     HouseRight,
-    HouseStatistics,
   },
   data() {
     return {
       map: null,
       leftClick: false,
       rightClick: false,
-      staClick: false,
       loadViewRendering: false,
       focusDong: {
         name: "",
@@ -136,6 +106,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(["setHouseListStore", "setDetailHouseStore"]),
     initMap() {
       const container = document.getElementById("map");
       const options = {
@@ -182,14 +153,6 @@ export default {
       this.loadViewRendering = true;
       this.rightClick = !this.rightClick;
     },
-    // 버튼 클릭 시 안전 지수 정보 열기
-    openSta() {
-      this.staClick = !this.staClick;
-    },
-    // 마커 클릭 시 안전 지수 열기
-    openStaCom() {
-      this.staClick = true;
-    },
     // 마커 클릭 시 오른쪽 컴포넌트 열기
     openRightCom() {
       if (this.loadViewRendering == false) {
@@ -199,7 +162,6 @@ export default {
     },
     closeAll() {
       this.leftClick = false;
-      this.staClick = false;
       this.rightClick = false;
     },
 
@@ -246,6 +208,8 @@ export default {
           this.apt = data;
         });
 
+      this.setHouseListStore(this.apt);
+
       this.clusterer.clear();
       this.markers = [];
       for (let i = 0; i < this.apt.length; i++) {
@@ -262,8 +226,8 @@ export default {
         const vueInstance = this;
         kakao.maps.event.addListener(marker, "click", function () {
           vueInstance.openRightCom();
-          vueInstance.openStaCom();
           vueInstance.aptInfomation = vueInstance.apt[i];
+          vueInstance.setDetailHouseStore(vueInstance.apt[i]);
           // console.log(vueInstance.aptInfomation);
           vueInstance.map.setCenter(markerPosition);
         });
@@ -322,6 +286,8 @@ export default {
           console.log(this.apt);
         });
 
+      this.setHouseListStore(this.apt);
+
       this.clusterer.clear();
       this.markers = [];
       for (let i = 0; i < this.apt.length; i++) {
@@ -338,8 +304,8 @@ export default {
         const vueInstance = this;
         kakao.maps.event.addListener(marker, "click", function () {
           vueInstance.openRightCom();
-          vueInstance.openStaCom();
           vueInstance.aptInfomation = vueInstance.apt[i];
+          vueInstance.setDetailHouseStore(vueInstance.apt[i]);
           console.log(vueInstance.aptInfomation);
           vueInstance.map.setCenter(markerPosition);
         });

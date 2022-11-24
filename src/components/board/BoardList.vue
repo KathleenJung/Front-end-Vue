@@ -42,7 +42,6 @@ export default {
         { key: "registerTime", label: "작성일", tdClass: "tdClass" },
         { key: "hit", label: "조회수", tdClass: "tdClass" },
       ],
-      rollIsAd: false,
     };
   },
   computed: {

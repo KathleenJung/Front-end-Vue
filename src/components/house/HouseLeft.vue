@@ -1,5 +1,5 @@
 <template>
-  <div style="max-width: 80%">
+  <div style="max-width: 50%">
     <div class="m-5">
       <div id="title">동으로 검색</div>
       <b-form-group id="input-sido">
