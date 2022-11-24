@@ -9,15 +9,24 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    sidos: [{ value: null, text: "선택하세요" }],
-    guguns: [{ value: null, text: "선택하세요" }],
-    dongs: [{value:null, text:"선택하세요"}],
+    sido: { value: "", text: "" },
+    gugun: { value: "", text: "" },
+    dong: { value: "", text: "" },
     houses: [],
     house: null,
     todos: [
       // { title: '할 일1', completed: false },
       // { title: '할 일2', completed: false },
     ],
+    searchDong: {
+      dongCode: null,
+      dognAdd: null,
+      aptName: null,
+      budgetLow: null,
+      budgetHigh: null,
+      areaLow: null,
+      areaHigh:null,
+    }
   },
   getters: {
     allTodosCount(state) {
@@ -36,36 +45,42 @@ export default new Vuex.Store({
   },
   mutations: {
     /////////////////////////////// House start /////////////////////////////////////
-    SET_SIDO_LIST(state, sidos) {
-      sidos.forEach((sido) => {
-        state.sidos.push({ value: sido.sidoCode, text: sido.sidoName });
-      });
+    SET_SIDO(state, sido) {
+      state.sido = sido;
     },
-    SET_GUGUN_LIST(state, guguns) {
-      guguns.forEach((gugun) => {
-        state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
-      });
+    SET_GUGUN(state, gugun) {
+      state.gugun = gugun;
     },
-    SET_DONG_LIST(state, dongs) {
-      dongs.forEach((dong) => {
-        state.dongs.push({ value: dong.dongCode, text: dong.dongName });
-      });
+    SET_DONG(state, dong) {
+      state.dong = dong;
     },
-    CLEAR_SIDO_LIST(state) {
-      state.sidos = [{ value: null, text: "선택하세요" }];
+    SET_SEARCH_DONG(state, searchDong) {
+      state.searchDong = searchDong;
     },
-    CLEAR_APT_LIST(state) {
+    CLEAR_SEARCH_DONG(state) {
+      state.searchDong = {
+        dongCode: null,
+        dognAdd: null,
+        aptName: null,
+        budgetLow: null,
+        budgetHigh: null,
+        areaLow: null,
+        areaHigh: null,
+      };
+    },
+    CLEAR_ALL(state) {
+      state.sido = { value: "", text: "" };
+        state.gugun = { value: "", text: "" };
+        state.dong = { value: "", text: "" };
+    },
+    CLEAR_HOUSE_LIST(state) {
       state.houses = [];
       state.house = null;
-    },
-    CLEAR_GUGUN_LIST(state) {
-      state.guguns = [{ value: null, text: "선택하세요" }];
     },
     SET_HOUSE_LIST(state, houses) {
       state.houses = houses;
     },
     SET_DETAIL_HOUSE(state, house) {
-      // console.log("Mutations", house);
       state.house = house;
     },
     /////////////////////////////// House end /////////////////////////////////////
@@ -99,28 +114,25 @@ export default new Vuex.Store({
   },
   actions: {
     /////////////////////////////// House start /////////////////////////////////////
-    getSido({ commit }) {
-      http
-        .get(`/map/sido`)
-        .then(({ data }) => {
-          // console.log(data);
-          commit("SET_SIDO_LIST", data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    setSidoStore({ commit }, sido) {
+      commit("SET_SIDO", sido);
     },
-    getGugun({ commit }, sidoCode) {
-      const params = { sido: sidoCode };
-      http
-        .get(`/map/gugun`, { params })
-        .then(({ data }) => {
-          // console.log(commit, response);
-          commit("SET_GUGUN_LIST", data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    setGugunStore({ commit }, gugun) {
+      commit("SET_GUGUN", gugun);
+    },
+    setDongStore({ commit }, dong) {
+      commit("SET_DONG", dong);
+    },
+    setSearchDongStore({ commit }, searchDong) {
+      commit("SET_SEARCH_DONG", searchDong);
+    },
+    setHouseListStore({ commit }, houses) {
+      commit("SET_HOUSE_LIST", houses);
+    },
+    detailHouse({ commit }, house) {
+      // 나중에 house.일련번호를 이용하여 API 호출
+      // console.log(commit, house);
+      commit("SET_DETAIL_HOUSE", house);
     },
     getHouseList({ commit }, gugunCode) {
       // vue cli enviroment variables 검색
@@ -145,11 +157,6 @@ export default new Vuex.Store({
         .catch((error) => {
           console.log(error);
         });
-    },
-    detailHouse({ commit }, house) {
-      // 나중에 house.일련번호를 이용하여 API 호출
-      // console.log(commit, house);
-      commit("SET_DETAIL_HOUSE", house);
     },
     /////////////////////////////// House end /////////////////////////////////////
 

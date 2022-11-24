@@ -22,25 +22,21 @@
               <b-icon icon="house-door" animation="fade" font-scale="2"></b-icon>
               메인
             </router-link> -->
-            <router-link :to="{ name: 'insta' }" class="m-5 link">
-              <!-- <b-icon icon="instagram" font-scale="2"></b-icon> -->
-              INSTAGRAM
-            </router-link>
-            <router-link :to="{ name: 'board' }" class="m-5 link">
-              <!-- <b-icon icon="journal" animation="fade" font-scale="2"></b-icon> -->
-              BOARD
-            </router-link>
             <router-link :to="{ name: 'house' }" class="m-5 link">
               <!-- <b-icon icon="house-fill" animation="fade" font-scale="2"></b-icon> -->
               HOUSE
             </router-link>
-            <router-link :to="{ name: 'todo' }" class="m-5 link">
-              <!-- <b-icon icon="calendar-check" animation="fade" font-scale="2"></b-icon> -->
-              TODOLIST
+            <router-link :to="{ name: 'board' }" class="m-5 link">
+              <!-- <b-icon icon="journal" animation="fade" font-scale="2"></b-icon> -->
+              NOTICE
             </router-link>
             <router-link :to="{ name: 'qna' }" class="m-5 link">
               <!-- <b-icon icon="patch-question" animation="fade" font-scale="2"></b-icon> -->
               QNA
+            </router-link>
+            <router-link :to="{ name: 'todo' }" class="m-5 link">
+              <!-- <b-icon icon="calendar-check" animation="fade" font-scale="2"></b-icon> -->
+              TODOLIST
             </router-link>
           </b-nav-item>
         </b-navbar-nav>
@@ -77,8 +73,7 @@ const memberStore = "memberStore";
 export default {
   name: "TheHeaderNavbar",
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapState(memberStore, ["isLogin", "userInfo"]),
@@ -88,13 +83,15 @@ export default {
     ...mapActions(memberStore, ["userLogout"]),
     onClickLogout() {
       console.log(this.userInfo.userId);
-      // this.userLogout(this.userInfo.userId);
-      this.$memberStore.dispatch("userLogout", this.userInfo.userId);
+      //vuex actions에서 userLogout 실행(Backend에 저장 된 리프레시 토큰 없애기
+      //+ satate에 isLogin, userInfo 정보 변경)
+      // this.$store.dispatch("userLogout", this.userInfo.userid);
+      this.userLogout(this.userInfo.userId);
       sessionStorage.removeItem("accessToken"); //저장된 토큰 없애기
       sessionStorage.removeItem("refreshToken"); //저장된 토큰 없애기
       if (this.$route.path != "/") this.$router.push({ name: "main" });
     },
-  }
+  },
 };
 </script>
 
@@ -107,13 +104,13 @@ export default {
   color: black;
   text-decoration: none;
   font-size: large;
-  font-family: 'NanumSquareBold';
+  font-family: "NanumSquareBold";
 }
 
 .title {
   color: black;
   text-decoration: none;
   font-size: x-large;
-  font-family: 'NanumSquareExtraBold';
+  font-family: "NanumSquareExtraBold";
 }
 </style>

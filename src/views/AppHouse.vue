@@ -2,7 +2,8 @@
   <div>
     <!-- <the-header-navbar style="position: absolute; width:100%; z-index: 1;"></the-header-navbar> -->
     <the-header-navbar style="width: 100%"></the-header-navbar>
-    <house-map></house-map>
+    <router-view></router-view>
+    <!-- <house-map></house-map> -->
     <!-- <b-container class="bv-example-row text-center" style="padding-top: 100px;">
       <h3 class="underline-orange">
         <b-icon icon="house-fill"></b-icon> House Service
@@ -32,7 +33,7 @@ import TheHeaderNavbar from "@/components/TheHeaderNavbar";
 // import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
 // import HouseList from "@/components/house/HouseList.vue";
 // import HouseDetail from "@/components/house/HouseDetail.vue";
-import HouseMap from "@/components/house/HouseMap.vue";
+// import HouseMap from "@/components/house/HouseMap.vue";
 
 export default {
   name: "AppHouse",
@@ -41,7 +42,7 @@ export default {
     // HouseList,
     // HouseDetail,
     TheHeaderNavbar,
-    HouseMap,
+    // HouseMap,
   },
 };
 </script>
