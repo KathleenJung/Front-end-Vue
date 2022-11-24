@@ -53,6 +53,7 @@ const memberStore = {
           }
         },
         (error) => { 
+          alert("아이디 혹은 비밀번호가 틀립니다. 입력정보를 확인해주세요.");
           console.log(error)
         }
       );

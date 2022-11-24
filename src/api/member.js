@@ -34,8 +34,12 @@ async function getUserDetail(userid, success, fail) {
   await api.get(`/user/${userid}`).then(success).catch(fail);
 }
 
-async function modify(userInfo, success, fail) { 
-  await api.put(`/user/${userInfo.userId}`, userInfo).then(success).catch(fail);
+async function modify(userDetail, success, fail) { 
+  await api.put(`/user/${userDetail.userId}`, {
+    params: {
+      userId: 'fake'
+    }
+   }).then(success).catch(fail);
 }
 
 async function deleteUser(userid, success, fail){ 
