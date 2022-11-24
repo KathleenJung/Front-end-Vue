@@ -117,7 +117,7 @@ export default {
       console.log(this.article.userid);
       http
         .post(`/board/write`, {
-          userId: this.article.userId,
+          userId: this.userInfo.userId,
           subject: this.article.subject,
           content: this.article.content,
         })

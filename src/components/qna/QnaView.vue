@@ -18,7 +18,9 @@
           v-if="isMyQnA()"
           >글수정</b-button
         >
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle">글삭제</b-button>
+        <b-button variant="outline-danger" size="sm" v-if="isMyQnA()" @click="deleteArticle"
+          >글삭제</b-button
+        >
       </b-col>
     </b-row>
     <b-row class="mb-1">
