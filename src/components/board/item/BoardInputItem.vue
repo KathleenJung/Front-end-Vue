@@ -2,18 +2,28 @@
   <b-row class="mb-1">
     <b-col style="text-align: left">
       <b-form @submit="onSubmit" @reset="onReset">
-        <b-form-group id="userid-group" label="작성자:" label-for="userid" description="작성자를 입력하세요.">
+        <b-form-group
+          id="userid-group"
+          label="작성자:"
+          label-for="userid"
+          description="작성자를 입력하세요."
+        >
           <b-form-input
             id="userid"
-            :disabled="isUserid"
-            v-model="article.userId"
+            disabled="false"
+            v-model="this.userInfo.userId"
             type="text"
             required
             placeholder="작성자 입력..."
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group id="subject-group" label="제목:" label-for="subject" description="제목을 입력하세요.">
+        <b-form-group
+          id="subject-group"
+          label="제목:"
+          label-for="subject"
+          description="제목을 입력하세요."
+        >
           <b-form-input
             id="subject"
             v-model="article.subject"
@@ -33,7 +43,9 @@
           ></b-form-textarea>
         </b-form-group>
 
-        <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'register'">글작성</b-button>
+        <b-button type="submit" variant="primary" class="m-1" v-if="this.type === 'register'"
+          >글작성</b-button
+        >
         <b-button type="submit" variant="primary" class="m-1" v-else>글수정</b-button>
         <b-button type="reset" variant="danger" class="m-1">취소</b-button>
       </b-form>
@@ -43,6 +55,9 @@
 
 <script>
 import http from "@/api/http";
+import { mapState } from "vuex";
+
+const memberStore = "memberStore";
 
 export default {
   name: "BoardInputItem",
@@ -54,7 +69,6 @@ export default {
         subject: "",
         content: "",
       },
-      isUserid: false,
     };
   },
   props: {
@@ -69,8 +83,10 @@ export default {
         // this.article.content = data.article.content;
         this.article = data;
       });
-      this.isUserid = true;
     }
+  },
+  computed: {
+    ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
     onSubmit(event) {
@@ -80,8 +96,11 @@ export default {
       let msg = "";
       // !this.article.userid && ((msg = "작성자 입력해주세요"), (err = false), this.$refs.userid.focus());
       // err &&
-      !this.article.subject && ((msg = "제목 입력해주세요"), (err = false), this.$refs.subject.focus());
-      err && !this.article.content && ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
+      !this.article.subject &&
+        ((msg = "제목 입력해주세요"), (err = false), this.$refs.subject.focus());
+      err &&
+        !this.article.content &&
+        ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
 
       if (!err) alert(msg);
       else this.type === "register" ? this.registArticle() : this.modifyArticle();
@@ -134,7 +153,7 @@ export default {
     moveList() {
       this.$router.push({ name: "boardlist" });
     },
-    
+
     viewArticle(article) {
       this.$router.push({
         name: "boardview",
