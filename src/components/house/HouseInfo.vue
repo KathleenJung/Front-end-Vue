@@ -1,56 +1,25 @@
 <template>
   <div>
     <b-container>
-      <div>하이</div>
-      <div id="title">통계 정보</div>
-      <div><house-security></house-security></div>
-      <div id="title">매매 정보</div>
       <div class="m-5">
         <div id="aptName">{{ this.house.apartmentName }}</div>
         <div id="buildYear" style="text-align: left">건축년도 : {{ this.house.buildYear }}</div>
         <div id="address">{{ this.house.roadNameAddress }}</div>
         <div id="address">{{ this.house.jibunNameAddress }}</div>
       </div>
+      <div id="title">매매 정보</div>
       <div class="m-5">
         <div id="text" style="margin-bottom: 10px" v-if="areas.length == 0">
           매매 정보가 없습니다 (┬┬﹏┬┬)
         </div>
         <b-tabs content-class="mt-3" pills fill>
-          <b-tab
-            v-for="(area, index) in areas"
-            :key="index"
-            :title="String(area)"
-            @click="disableMore"
-          >
-            <div>
-              <LineChartGenerator
-                :chart-options="chartOptions"
-                :chart-data="chartData"
-                :chart-id="chartId"
-                :dataset-id-key="datasetIdKey"
-                :plugins="plugins"
-                :css-classes="cssClasses"
-                :styles="styles"
-                :width="width"
-                :height="height"
-              />
-            </div>
+          <b-tab v-for="(area, index) in areas" :key="index" :title="String(area)" @click="disableMore">
             <div v-if="!more">
-              <b-table
-                id="infoTable"
-                hover
-                :items="dealListByArea[index].slice(0, 5)"
-                :fields="fields"
-              >
+              <b-table id="infoTable" hover :items="dealListByArea[index].slice(0, 5)" :fields="fields">
               </b-table>
             </div>
             <div v-if="more">
-              <b-table
-                id="infoTable"
-                hover
-                :items="dealListByArea[index]"
-                :fields="fields"
-              ></b-table>
+              <b-table id="infoTable" hover :items="dealListByArea[index]" :fields="fields"></b-table>
             </div>
             <div id="text" @click="moreInfo" v-if="!more && dealListByArea[index].length > 5">
               더보기
@@ -59,27 +28,17 @@
           </b-tab>
         </b-tabs>
       </div>
+
+      <div id="title">통계 정보</div>
+      <div>
+        <house-security class="mb-5"></house-security>
+      </div>
     </b-container>
   </div>
 </template>
 
 <script>
 // charts.js
-import { Line as LineChartGenerator } from "vue-chartjs/legacy";
-
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  LineElement,
-  LinearScale,
-  CategoryScale,
-  PointElement,
-} from "chart.js";
-
-ChartJS.register(Title, Tooltip, Legend, LineElement, LinearScale, CategoryScale, PointElement);
-
 import { mapState } from "vuex";
 import HouseSecurity from "./HouseSecurity.vue";
 
@@ -104,55 +63,10 @@ export default {
           sortable: true,
         },
       ],
-      chartData: {
-        labels: ["January", "February", "March", "April", "May", "June", "July"],
-        datasets: [
-          {
-            label: "Data One",
-            backgroundColor: "#f87979",
-            data: [40, 39, 10, 40, 39, 80, 40],
-          },
-        ],
-      },
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-      },
     };
   },
   components: {
-    LineChartGenerator,
     HouseSecurity,
-  },
-  props: {
-    chartId: {
-      type: String,
-      default: "line-chart",
-    },
-    datasetIdKey: {
-      type: String,
-      default: "label",
-    },
-    width: {
-      type: Number,
-      default: 400,
-    },
-    height: {
-      type: Number,
-      default: 400,
-    },
-    cssClasses: {
-      default: "",
-      type: String,
-    },
-    styles: {
-      type: Object,
-      default: () => {},
-    },
-    plugins: {
-      type: Array,
-      default: () => [],
-    },
   },
   methods: {
     moreInfo() {
@@ -200,31 +114,6 @@ export default {
         }
         dl.push(temp);
       }
-      return dl;
-    },
-    dates(index) {
-      let arr = [];
-      this.dealListByArea[index].forEach((deal) => {
-        arr.push(deal["date"].slice(0, 4));
-      });
-      // 배열에서 중복 값 제거
-      arr = Array.from(new Set(arr));
-      // 배열 오름차순으로 정렬
-      arr.sort();
-      return arr;
-    },
-    dateChart() {
-      let dl = [];
-      for (let i = 0; i < this.dates.length; i++) {
-        let temp = [];
-        for (let j = 0; j < this.dealListByArea.length; j++) {
-          if (this.dates[i] === this.dealListByArea[j].date) {
-            temp.push(this.dealListByArea[j]);
-          }
-        }
-        dl.push(temp);
-      }
-      console.log(dl[0]);
       return dl;
     },
   },

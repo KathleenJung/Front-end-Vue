@@ -138,6 +138,12 @@ export default new Vuex.Store({
       // console.log(commit, house);
       commit("SET_DETAIL_HOUSE", house);
     },
+    async getSecurityData({ dispatch },aptCode) {
+      const code = parseInt(aptCode / 10000);
+      await http.get(`/security-index/${code}`).then(({ data }) => {
+        dispatch("setSecurityStore", data);
+      });
+    },
     setSecurityStore({ commit }, securityIndex) {
       commit("SET_SEQURITY_INDEX", securityIndex);
     },
