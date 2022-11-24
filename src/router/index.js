@@ -87,6 +87,17 @@ const routes = [
         name : "findPwd",
         component: () => import("@/components/user/UserFindPwd"),
       },
+      {
+        path : "mypage",
+        name : "mypage",
+        component: () => import("@/components/user/UserMyPage"),
+      },
+      {
+        path : "changePwd",
+        name : "changePwd",
+        component: () => import("@/components/user/UserChangePwd"),
+      },
+      
     ],
   },
   {

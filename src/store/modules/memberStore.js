@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout, changePwd} from "@/api/member";
+import { login, findById, tokenRegeneration, logout, changePwd, deleteUser} from "@/api/member";
 
 const memberStore = {
   namespaced: true,
@@ -53,6 +53,7 @@ const memberStore = {
           }
         },
         (error) => { 
+          alert("아이디 혹은 비밀번호가 틀립니다. 입력정보를 확인해주세요.");
           console.log(error)
         }
       );
@@ -147,6 +148,23 @@ const memberStore = {
           } else {
             console.log("비밀번호 갱신 실패");
           }
+        },
+        (error) => {
+          console.log(error);
+        }
+      )
+    },
+    async deleteUserInfo({ commit }, userid) { 
+      console.log('delete User Info 메소드', userid);
+      await deleteUser(
+        userid,
+        ({data}) => {
+          console.log(data);
+          commit("SET_USER_INFO", null);
+          commit("SET_IS_VALID_TOKEN", false);
+          commit("SET_IS_LOGIN", false);
+          sessionStorage.removeItem("accessToken"); //저장된 토큰 없애기
+          sessionStorage.removeItem("refreshToken"); //저장된 토큰 없애기
         },
         (error) => {
           console.log(error);

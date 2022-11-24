@@ -30,4 +30,20 @@ async function changePwd(userid, success, fail){
   await api.put(`/user/${userid}/password`).then(success).catch(fail);
 }
 
-export { login, findById, tokenRegeneration, logout, findPwd, changePwd};
+async function getUserDetail(userid, success, fail) { 
+  await api.get(`/user/${userid}`).then(success).catch(fail);
+}
+
+async function modify(userDetail, success, fail) { 
+  await api.put(`/user/${userDetail.userId}`, {
+    params: {
+      userId: 'fake'
+    }
+   }).then(success).catch(fail);
+}
+
+async function deleteUser(userid, success, fail){ 
+  await api.delete(`/user/${userid}`).then(success).catch(fail);
+}
+
+export { login, findById, tokenRegeneration, logout, findPwd, changePwd, getUserDetail, modify, deleteUser};

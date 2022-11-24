@@ -19,7 +19,9 @@
           <b-form-group label-for="nested-ID" label-align-sm="right">
             <b-form-input id="nested-ID" placeholder="아이디" v-model="user.userId"></b-form-input>
           </b-form-group>
-
+          <b-form-group label-for="nested-ID" label-align-sm="right">
+            <b-form-input id="nested-ID" placeholder="이름" v-model="user.userName"></b-form-input>
+          </b-form-group>
           <b-form-group label-for="nested-password" label-align-sm="right">
             <b-form-input
               id="nested-password"

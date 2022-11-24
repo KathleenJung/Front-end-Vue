@@ -58,6 +58,9 @@
           <div v-else>
             <!-- <div>{{ sessionStorage.getItem("userInfo.userName") }} 님 안녕하세요?</div> -->
             <div :class="isHovered ? 'mr-5 link-hover' : 'mr-5 link'" @click.prevent="onClickLogout">SIGN-OUT</div>
+            <router-link :to="{ name: 'mypage' }" :class="isHovered ? 'mr-5 link-hover' : 'mr-5 link'">
+              My Page
+            </router-link>
           </div>
         </b-navbar-nav>
       </b-collapse>
