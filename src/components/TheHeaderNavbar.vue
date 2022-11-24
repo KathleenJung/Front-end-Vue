@@ -3,7 +3,7 @@
     <b-navbar toggleable="lg" type="dark" variant="white">
       <b-navbar-brand href="#">
         <router-link :to="{ name: 'main' }" class="m-5 title">
-          WhereIsOurHome?
+          MoYeoBang
           <!-- <b-img
             :src="require('@/assets/ssafy_logo.png')"
             id="logo"
@@ -34,10 +34,9 @@
               <!-- <b-icon icon="patch-question" animation="fade" font-scale="2"></b-icon> -->
               QNA
             </router-link>
-            <router-link :to="{ name: 'todo' }" class="m-5 link">
-              <!-- <b-icon icon="calendar-check" animation="fade" font-scale="2"></b-icon> -->
+            <!-- <router-link :to="{ name: 'todo' }" class="m-5 link">
               TODOLIST
-            </router-link>
+            </router-link> -->
           </b-nav-item>
         </b-navbar-nav>
 
