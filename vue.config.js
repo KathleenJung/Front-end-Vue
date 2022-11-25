@@ -3,4 +3,4 @@ module.exports = defineConfig({
   transpileDependencies: true
 })
 const cors = require('cors');
-app.use(cors());
+// app.use(cors());
