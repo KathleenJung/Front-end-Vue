@@ -6,10 +6,15 @@
     <div id="address">{{ aptInfomation.roadNameAddress }}</div>
     <div id="address">{{ aptInfomation.jibunNameAddress }}</div>
     <div id="text" @click="viewInfo">자세히보기</div>
+    <!-- <div id="infra">
+      <b-alert show variant="success">Success Alert</b-alert>
+    </div> -->
   </div>
 </template>
 
 <script>
+import http from "@/api/http";
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
@@ -30,6 +35,18 @@ export default {
     disableMore() {
       this.more = false;
     },
+    async getGrade(thisHouse, sidoCode) {
+      let result = null;
+      await http
+        .get(`/infra/statistics?latitude=${thisHouse.lat}&longitude=${thisHouse.lng}&sidoCode=${sidoCode}`)
+        .then(({ data }) => {
+          result = data;
+        });
+      return result;
+    }
+  },
+  computed: {
+    ...mapState(["house"]),
   },
   mounted() {
     const roadviewContainer = document.getElementById("roadview"); //로드뷰를 표시할 div

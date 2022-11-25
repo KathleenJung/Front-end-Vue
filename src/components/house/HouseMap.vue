@@ -1,51 +1,28 @@
 <template>
   <div>
     <!-- <div style="padding-top:200px;"></div> -->
-    <b-button
-      variant="light"
-      style="position: absolute; left: 0; z-index: 3; margin-top: 4%; margin-left: 3%"
-      @click="openLeft"
-    >
+    <b-button variant="light" style="position: absolute; left: 0; z-index: 3; margin-top: 4%; margin-left: 3%"
+      @click="openLeft">
       <b-icon icon="search"></b-icon>
     </b-button>
-    <house-left
-      @focusDong="focusingDong"
-      :style="
-        !leftClick
-          ? 'display:none;'
-          : 'position:absolute; left:0; margin-top:3%; margin-bottom:3%; margin-left:2%; background-color:white; height:80%; z-index:2; overflow-y:auto;'
-      "
-    ></house-left>
-    <house-right
-      v-if="loadViewRendering"
-      :aptInfomation="aptInfomation"
-      :style="
-        !rightClick
-          ? 'display:none;'
-          : 'position:absolute; padding:20px; width:500px; right:0; margin-top:3%; margin-bottom:3%; margin-right:2%; background-color:white; height:80%; z-index:2; overflow-y:auto;'
-      "
-    >
+    <house-left @focusDong="focusingDong" :style="
+      !leftClick
+        ? 'display:none;'
+        : 'position:absolute; left:0; margin-top:3%; margin-bottom:3%; margin-left:2%; background-color:white; height:80%; z-index:2; overflow-y:auto;'
+    "></house-left>
+    <house-right v-if="loadViewRendering" :aptInfomation="aptInfomation" :style="
+      !rightClick
+        ? 'display:none;'
+        : 'position:absolute; padding:20px; width:500px; right:0; margin-top:3%; margin-bottom:3%; margin-right:2%; background-color:white; height:80%; z-index:2; overflow-y:auto;'
+    ">
     </house-right>
-    <b-button
-      id="title"
-      variant="light"
-      style="position: absolute; bottom: 0; z-index: 3"
-      @click="closeAll"
-      v-if="this.rightClick || this.leftClick"
-    >
-      Close All</b-button
-    >
-    <b-button
-      v-if="aptInfomation != null"
-      variant="light"
-      class="m-5"
-      style="position: absolute; right: 0; z-index: 3; margin-top: 4%; margin-right: 3%"
-      @click="openRight"
-    >
-      <b-icon
-        icon="info-circle-fill
-"
-      ></b-icon>
+    <b-button id="title" variant="light" style="position: absolute; bottom: 0; z-index: 3" @click="closeAll"
+      v-if="this.rightClick || this.leftClick">
+      Close All</b-button>
+    <b-button v-if="aptInfomation != null" variant="light" class="m-5"
+      style="position: absolute; right: 0; z-index: 3; margin-top: 4%; margin-right: 3%" @click="openRight">
+      <b-icon icon="info-circle-fill
+"></b-icon>
     </b-button>
     <div id="map" style="position: absolute; z-index: 1"></div>
   </div>
