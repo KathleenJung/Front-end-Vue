@@ -55,12 +55,11 @@
               SIGN-IN
             </router-link>
           </div>
-          <div v-else>
-            <!-- <div>{{ sessionStorage.getItem("userInfo.userName") }} 님 안녕하세요?</div> -->
-            <div :class="isHovered ? 'mr-5 link-hover' : 'mr-5 link'" @click.prevent="onClickLogout">SIGN-OUT</div>
+          <div class="d-flex" v-else>
             <router-link :to="{ name: 'mypage' }" :class="isHovered ? 'mr-5 link-hover' : 'mr-5 link'">
-              My Page
+              MY PAGE
             </router-link>
+            <div :class="isHovered ? 'mr-5 link-hover' : 'mr-5 link'" @click.prevent="onClickLogout">SIGN-OUT</div>
           </div>
         </b-navbar-nav>
       </b-collapse>

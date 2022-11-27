@@ -28,6 +28,7 @@ export default new Vuex.Store({
       areaHigh:null,
     },
     sequrityIndex: Object,
+    aptGrade:Object,
   },
   getters: {
     allTodosCount(state) {
@@ -61,6 +62,9 @@ export default new Vuex.Store({
     SET_SEQURITY_INDEX(state, sequrityIndex) {
       state.sequrityIndex = sequrityIndex;
     },
+    SET_APT_GRADE(state, aptGrade) {
+      
+    }
     CLEAR_SEARCH_DONG(state) {
       state.searchDong = {
         dongCode: null,
