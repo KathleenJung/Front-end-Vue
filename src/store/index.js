@@ -63,8 +63,8 @@ export default new Vuex.Store({
       state.sequrityIndex = sequrityIndex;
     },
     SET_APT_GRADE(state, aptGrade) {
-      
-    }
+      state.aptGrade = aptGrade;
+    },
     CLEAR_SEARCH_DONG(state) {
       state.searchDong = {
         dongCode: null,
@@ -150,6 +150,20 @@ export default new Vuex.Store({
     },
     setSecurityStore({ commit }, securityIndex) {
       commit("SET_SEQURITY_INDEX", securityIndex);
+    },
+    async getAptGrade({dispatch}, aptInfo) {
+      const code = parseInt(aptInfo.aptCode / 1000000000000);
+      const lat = aptInfo.lat;
+      const lng = aptInfo.lng;
+      console.log('요청 확인 ' + 'sidoCode = ' + code + ', lat = ' + lat + ', lng = ' +  lng);
+      await http
+        .get(`/infra/statistics?latitude=${lat}&longitude=${lng}&sidoCode=${code}`)
+        .then(({ data }) => {
+          dispatch("setAptStore", data);
+        });
+    },
+    setAptStore({ commit }, aptGrade) {
+      commit("SET_APT_GRADE", aptGrade);
     },
     getHouseList({ commit }, gugunCode) {
       // vue cli enviroment variables 검색

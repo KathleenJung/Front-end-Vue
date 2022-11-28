@@ -89,7 +89,6 @@ export default {
   },
   methods: {
     ...mapActions(["setSecurityStore", "getSecurityData"]),
-
   },
 
 

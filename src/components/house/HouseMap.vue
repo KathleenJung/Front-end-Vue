@@ -83,7 +83,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setHouseListStore", "setDetailHouseStore"]),
+    ...mapActions(["setHouseListStore", "setDetailHouseStore", "getAptGrade"]),
     initMap() {
       const container = document.getElementById("map");
       const options = {
@@ -205,8 +205,12 @@ export default {
           vueInstance.openRightCom();
           vueInstance.aptInfomation = vueInstance.apt[i];
           vueInstance.setDetailHouseStore(vueInstance.apt[i]);
-          // console.log(vueInstance.aptInfomation);
+          console.log(vueInstance.aptInfomation);
           vueInstance.map.setCenter(markerPosition);
+
+          // aptGrade store setting
+          console.log('click 요청 ' + vueInstance.apt[i].aptCode, vueInstance.apt[i].lat, vueInstance.aptInfomation.lng);
+          vueInstance.getAptGrade(vueInstance.apt[i]);
         });
       }
       this.clusterer.addMarkers(this.markers);
